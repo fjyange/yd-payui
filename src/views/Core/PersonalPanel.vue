@@ -5,63 +5,21 @@
           <img class="avatar" :src="require('@/assets/user.png')" />
         </div>  
         <div class="name-role">
-          <span class="sender">{{ user.name }} - {{ user.role }}</span>  
+          <span class="sender">{{ user.name }}</span>  
         </div>  
-        <div class="registe-info">
-          <span class="registe-info">
-            <li class="fa fa-clock-o"></li>
-            {{ user.registeInfo }}
-          </span>
-        </div>  
-    </div>
-    <div class="personal-relation">
-        <span class="relation-item">followers</span>  
-        <span class="relation-item">watches</span>  
-        <span class="relation-item">friends</span>
-    </div>
-    <div class="main-operation">
-        <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-male"> 个人中心</el-button>
-        </span>    
-        <span class="main-operation-item">
-          <el-button size="small" icon="fa fa-key"> 修改密码</el-button>
-        </span>    
-    </div>
-    <div class="other-operation">
-        <div class="other-operation-item">
-          <li class="fa fa-eraser"></li>
-          清除缓存
-        </div>    
-        <div class="other-operation-item">
-          <li class="fa fa-user"></li>
-          在线人数
-        </div>    
-        <div class="other-operation-item">
-          <li class="fa fa-bell"></li>
-          访问次数
-        </div>    
-        <div class="other-operation-item" @click="showBackupDialog">
-          <li class="fa fa-undo"></li>
-          {{$t("common.backupRestore")}}
-        </div>    
     </div>
     <div class="personal-footer" @click="logout">
       <li class="fa fa-sign-out"></li>
       {{$t("common.logout")}}
     </div>
-    <!--备份还原界面-->
-    <backup ref="backupDialog" @afterRestore="afterRestore"></backup>
   </div>
 </template>
 
 <script>
 import Cookies from "js-cookie"
-import Backup from "@/views/Backup/Backup"
+import store from '@/store'
 export default {
   name: 'PersonalPanel',
-  components:{
-    Backup
-  },
   props: {
     user: {
       type: Object,
@@ -86,30 +44,15 @@ export default {
       .then(() => {
         sessionStorage.removeItem("user")
         this.deleteCookie("token")
+        store.commit('setPerms', [])
+        store.commit('setNavTree', [])
         this.$router.push("/login")
-        this.$api.login.logout().then((res) => {
-          }).catch(function(res) {
-        })
       })
       .catch(() => {})
     },
     // 删除cookie
     deleteCookie: function(name) { 
         Cookies.remove(name)
-    },
-    // 打开备份还原界面
-    showBackupDialog: function() {
-      this.$refs.backupDialog.setBackupVisible(true)
-    },
-    // 成功还原之后，重新登录
-    afterRestore: function() {
-        this.$refs.backupDialog.setBackupVisible(false)
-        sessionStorage.removeItem("user")
-        this.deleteCookie("token")
-        this.$router.push("/login")
-        this.$api.login.logout().then((res) => {
-          }).catch(function(res) {
-        })
     }
   },
   mounted() {

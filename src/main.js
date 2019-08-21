@@ -22,3 +22,6 @@ new Vue({
   store,
   render: h => h(App)
 });
+window.addEventListener('load', function () {
+  router.replace("/")
+})

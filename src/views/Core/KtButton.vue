@@ -1,6 +1,6 @@
 <template>
   <el-button :size="size" :type="type" :icon="icon"
-    :loading="loading" :disabled="!hasPerms(perms)" @click="handleClick">
+    :loading="loading" :disabled="!hasPerms(perms)" v-if="show" @click="handleClick">
     {{label}}
   </el-button>
 </template>
@@ -41,6 +41,7 @@ export default {
   },
   data() {
     return {
+      show:true
     }
   },
   methods: {
@@ -50,7 +51,13 @@ export default {
     }, 
     hasPerms: function (perms) {
       // 根据权限标识和外部指示状态进行权限判断
-      return hasPermission(perms) & !this.disabled
+      if (!hasPermission(perms)){
+          this.show = false
+      }
+      if (hasPermission(perms) & !this.disabled){
+        return true
+      }
+      return false
     }
   },
   mounted() {

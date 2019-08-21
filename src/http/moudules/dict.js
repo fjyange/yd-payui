@@ -1,13 +1,10 @@
 import axios from '../axios'
 
-/* 
- * 字典管理模块
- */
 
 // 保存
 export const save = (data) => {
     return axios({
-        url: '/dict/save',
+        url: '/dictIndex/save',
         method: 'post',
         data
     })
@@ -15,7 +12,7 @@ export const save = (data) => {
 // 删除
 export const batchDelete = (data) => {
     return axios({
-        url: '/dict/delete',
+        url: '/dictIndex/delete',
         method: 'post',
         data
     })
@@ -23,7 +20,15 @@ export const batchDelete = (data) => {
 // 分页查询
 export const findPage = (data) => {
     return axios({
-        url: '/dict/findPage',
+        url: '/dictIndex/findPage',
+        method: 'post',
+        data
+    })
+}
+
+export const getDict = (data) => {
+    return axios({
+        url: '/dictIndex/getDict',
         method: 'post',
         data
     })

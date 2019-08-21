@@ -10,7 +10,19 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api/': {
+        // target: 'http://localhost:8080/yunduanpay/authorize/',
+        target: 'http://193.112.135.244/authorize/',
+        // target: 'http://193.112.135.244:9090/authorize/',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/': ''   //需要rewrite重写的,
+       } 
+      }
+    },
+
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

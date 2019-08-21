@@ -21,7 +21,7 @@ const router = new Router({
       children: [
         { 
           path: '', 
-          name: '系统介绍', 
+          name: '首页', 
           component: Intro,
           meta: {
             icon: 'fa fa-home fa-lg',
@@ -77,22 +77,22 @@ function addDynamicMenuAndRoutes(userName, to, from) {
     console.log('动态菜单和路由已经存在.')
     return
   }
-  api.menu.findNavTree({'userName':userName})
-  .then(res => {
+  api.menu.findNavTree().then(res => {
+    if(res.success){
+      api.user.findPermissions().then(res => {
+        // 保存用户权限标识集合
+        store.commit('setPerms', res.result)
+      })
+    }
     // 添加动态路由
-    let dynamicRoutes = addDynamicRoutes(res.data)
+    let dynamicRoutes = addDynamicRoutes(res.result)
     // 处理静态组件绑定路由
     handleStaticComponent(router, dynamicRoutes)
     router.addRoutes(router.options.routes)
     // 保存加载状态
     store.commit('menuRouteLoaded', true)
     // 保存菜单树
-    store.commit('setNavTree', res.data)
-  }).then(res => {
-    api.user.findPermissions({'name':userName}).then(res => {
-      // 保存用户权限标识集合
-      store.commit('setPerms', res.data)
-    })
+    store.commit('setNavTree', res.result)
   })
   .catch(function(res) {
   })

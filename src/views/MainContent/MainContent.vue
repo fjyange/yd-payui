@@ -16,7 +16,7 @@
         </el-dropdown>
         <el-tab-pane v-for="item in mainTabs"
           :key="item.name" :label="item.title" :name="item.name">
-          <span slot="label"><i :class="item.icon"></i> {{item.title}} </span>
+          <span slot="label"><i :class="item.icon"></i> {{item.name}} </span>
         </el-tab-pane>
       </el-tabs>
     </div>

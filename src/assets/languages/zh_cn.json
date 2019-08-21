@@ -19,6 +19,8 @@
         "add": "新增",
         "edit": "编辑",
         "delete": "删除",
+        "conf": "配置",
+        "payConf": "支付配置",
         "batchDelete": "批量删除",
         "search": "查询",
         "loading": "拼命加载中",
@@ -26,7 +28,6 @@
         "comfirm": "确定",
         "cancel": "取消",
         "reset": "重置"
-        
     },
     "sys": {
         "sysMng": "系统管理",

@@ -32,14 +32,14 @@ export const findPage = (data) => {
 export const findAll = () => {
     return axios({
         url: '/role/findAll',
-        method: 'get'
+        method: 'post'
     })
 }
 // 查询角色菜单集合
 export const findRoleMenus = (params) => {
     return axios({
         url: '/role/findRoleMenus',
-        method: 'get',
+        method: 'post',
         params
     })
 }
