@@ -119,7 +119,7 @@ export default {
     }
   },
   mounted() {
-    this.sysName = "树人支付";
+    this.sysName = "俊支付";
     var user = sessionStorage.getItem("user");
     if (user) {
       this.user.name = user;

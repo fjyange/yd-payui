@@ -205,7 +205,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://120.24.184.96/authorize/attach/fileUpload"
+            action="http://120.79.91.63/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -344,7 +344,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://120.24.184.96/authorize/attach/getFile?ID=" + id;
+      return "http://120.79.91.63/authorize/attach/getFile?ID=" + id;
       // return "http://120.24.93.47/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
