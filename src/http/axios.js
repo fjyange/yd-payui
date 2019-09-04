@@ -26,8 +26,8 @@ export default function $axios(options) {
         // console.log('准备发送请求...')
         // 2. 带上token
         if (token) {
-          config.headers['Authorization'] = 'DSPAYBasic ' + token
-          // config.headers['Authorization'] = 'YUNDUANPAYBasic ' + token
+          // config.headers['Authorization'] = 'DSPAYBasic ' + token
+          config.headers['Authorization'] = 'YUNDUANPAYBasic ' + token
           // config.headers['Authorization'] = 'JUNPAYBasic ' + token
         } else {
           // 重定向到登录页面
