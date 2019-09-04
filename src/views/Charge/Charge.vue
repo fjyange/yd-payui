@@ -4,7 +4,7 @@
     <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
       <el-form :inline="true" :model="filters" :size="size">
         <el-form-item>
-          <el-input v-model="filters.USER_NAME" placeholder="用户登录名"></el-input>
+          <el-input v-model="filters.USER_NAME" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item>
           <kt-button
@@ -46,6 +46,13 @@
         prop="USER_ACCOUNT"
         min-width="column.minWidth"
         label="用户登录名"
+      ></el-table-column>
+      <el-table-column
+        header-align="center"
+        align="center"
+        prop="USER_NAME"
+        min-width="column.minWidth"
+        label="用户名"
       ></el-table-column>
       <el-table-column
         header-align="center"
@@ -229,7 +236,7 @@ export default {
                   this.$refs["dataForm"].resetFields();
                 } else {
                   this.$message({
-                    message: "操作失败, " + res.msg,
+                    message: "操作失败, " + res.result,
                     type: "error"
                   });
                 }
@@ -283,7 +290,7 @@ export default {
             this.findPage(false);
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }

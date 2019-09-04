@@ -36,7 +36,7 @@
         :formatter="column.formatter"
         :sortable="column.sortable==null?true:column.sortable"
       ></el-table-column>
-      <el-table-column fixed="right" align="center" width="400" label="操作">
+      <el-table-column fixed="right" align="center" width="220" label="操作">
         <template slot-scope="scope">
           <kt-button
             icon="fa fa-edit"
@@ -246,7 +246,7 @@ export default {
           this.$message({ message: "操作成功", type: "success" });
         } else {
           this.$message({
-            message: "操作失败, " + res.msg,
+            message: "操作失败, " + res.result,
             type: "error"
           });
         }
@@ -299,7 +299,7 @@ export default {
           if (res.success) {
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }
@@ -327,7 +327,7 @@ export default {
             this.passwordConf.PASSWORD = "";
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }
@@ -358,7 +358,7 @@ export default {
                   this.$refs["dataForm"].resetFields();
                 } else {
                   this.$message({
-                    message: "操作失败, " + res.msg,
+                    message: "操作失败, " + res.result,
                     type: "error"
                   });
                 }
@@ -398,13 +398,15 @@ export default {
       this.columns = [
         { prop: "USER_ACCOUNT", label: "用户名", minWidth: 120 },
         { prop: "USER_NAME", label: "真实姓名", minWidth: 120 },
-        { prop: "USER_PHONE", label: "手机号", minWidth: 100 },
-        { prop: "BANK_ACCOUNT", label: "银行卡号", minWidth: 120 },
-        { prop: "BANK_NAME", label: "银行名称", minWidth: 100 },
+        { prop: "V_COUNT_RECEIVABLES", label: "总收款", minWidth: 120 },
+        { prop: "V_SURPLUS_BOND", label: "剩余保证金", minWidth: 120 },
         { prop: "V_WX_RECEIVABLES", label: "微信收款", minWidth: 120 },
         { prop: "V_ALI_RECEIVABLES", label: "支付宝收款", minWidth: 120 },
-        { prop: "V_COUNT_RECEIVABLES", label: "总收款", minWidth: 120 },
-        { prop: "V_SURPLUS_BOND", label: "剩余保证金", minWidth: 120 }
+        { prop: "RATE_COUNT", label: "返佣金额", minWidth: 120 },
+        { prop: "USER_RATE", label: "费率", minWidth: 120 },
+         { prop: "USER_PHONE", label: "手机号", minWidth: 100 },
+        { prop: "BANK_ACCOUNT", label: "银行卡号", minWidth: 120 },
+        { prop: "BANK_NAME", label: "银行名称", minWidth: 100 }
       ];
       this.filterColumns = JSON.parse(JSON.stringify(this.columns));
     }

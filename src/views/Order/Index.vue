@@ -36,7 +36,8 @@
     <!--表格内容栏-->
     <el-table
       :data="pageResult.content"
-      style="width: 100%"
+      style="width: 100%" 
+      class="order_tb"
       :row-class-name="tableRowClassName"
       v-loading="loading"
       :element-loading-text="$t('action.loading')"
@@ -62,7 +63,7 @@
           <span v-else>待确认</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" width="180" label="操作">
+      <el-table-column header-align="center" align="center" width="180" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
             v-if="scope.row.V_STATUS ==='2'"
@@ -232,5 +233,8 @@ export default {
 }
 .el-table .bd-row {
   background: #eaf518;
+}
+.order_tb .el-table__body tr:hover>td {
+background: none !important;
 }
 </style>

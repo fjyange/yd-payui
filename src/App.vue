@@ -24,4 +24,10 @@ export default {
   left: 0px;
   right: 0px;
 }
+.el-menu{
+  background: #94C0C6 !important;
+}
+.el-table th.is-leaf {
+  border-top: 1px solid #EBEEF5;
+}
 </style>

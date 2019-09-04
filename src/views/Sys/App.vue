@@ -170,7 +170,7 @@ export default {
 							if(res.success) {
 								this.$message({ message: '操作成功', type: 'success' })
 							} else {
-								this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+								this.$message({message: '操作失败, ' + res.result, type: 'error'})
 							}
 							this.findPage(null)
 						})
@@ -209,7 +209,7 @@ export default {
 								this.dialogVisible = false
 								this.$refs['dataForm'].resetFields()
 							} else {
-								this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+								this.$message({message: '操作失败, ' + res.result, type: 'error'})
 							}
 							this.findPage(null)
 						}).catch(res => {
@@ -271,7 +271,7 @@ export default {
   
             } else {
               this.$message({
-                message: "操作失败, " + res.msg,
+                message: "操作失败, " + res.result,
                 type: "error"
               });
             }

@@ -10,13 +10,10 @@
           <el-input v-model="filters.USER_NAME" placeholder="用户真实姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="filters.BELONGUSER" placeholder="所属用户"></el-input>
-        </el-form-item>
-        <el-form-item>
           <kt-button
             icon="fa fa-search"
             :label="$t('action.search')"
-            perms="sys:user:search"
+            perms="sys:belong:search"
             type="primary"
             @click="findPage(true)"
           />
@@ -25,7 +22,7 @@
           <kt-button
             icon="fa fa-plus"
             :label="$t('action.add')"
-            perms="sys:user:add"
+            perms="sys:belong:add"
             type="primary"
             @click="handleAdd"
           />
@@ -64,51 +61,33 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="USER_LEVEL" label="是否置顶" width="120">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.USER_LEVEL"
-            active-color="#13ce66"
-            active-value="1"
-            inactive-value="2"
-            @change="settUserLevel(scope.row)"
-          ></el-switch>
-        </template>
-      </el-table-column>
       <el-table-column fixed="right" align="center" width="400" label="操作">
         <template slot-scope="scope">
           <kt-button
             icon="fa fa-edit"
             label="返佣设置"
-            perms="sys:agent:rate"
+            perms="sys:belong:rate"
             :size="size"
             @click="handleRate(scope.row)"
           />
           <kt-button
             icon="fa fa-edit"
-            :label="$t('action.payConf')"
-            perms="sys:user:payConf"
-            :size="size"
-            @click="handleOtherConf(scope.row)"
-          />
-          <kt-button
-            icon="fa fa-edit"
             label="重置密码"
-            perms="sys:user:payConf"
+            perms="sys:belong:reset"
             :size="size"
             @click="handlePassword(scope.row)"
           />
           <kt-button
             icon="fa fa-edit"
             :label="$t('action.edit')"
-            perms="sys:user:edit"
+            perms="sys:belong:edit"
             :size="size"
             @click="handleEdit(scope.row)"
           />
           <kt-button
             icon="fa fa-trash"
             :label="$t('action.delete')"
-            perms="sys:user:delete"
+            perms="sys:belong:delete"
             :size="size"
             type="danger"
             @click="handleDelete(scope.row)"
@@ -219,6 +198,9 @@
         <el-form-item label="ID" prop="USER_ID" v-if="false">
           <el-input v-model="dataForm.USER_ID" :disabled="true" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="ROLE_ID" prop="ROLE_ID" v-if="false">
+          <el-input v-model="dataForm.ROLE_ID" :disabled="true" auto-complete="off"></el-input>
+        </el-form-item>
         <el-form-item label="用户名" prop="USER_ACCOUNT">
           <el-input v-model="dataForm.USER_ACCOUNT" auto-complete="off"></el-input>
         </el-form-item>
@@ -233,26 +215,6 @@
         </el-form-item>
         <el-form-item label="银行名称" prop="BANK_NAME">
           <el-input v-model="dataForm.BANK_NAME" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="角色" prop="ROLE_ID">
-          <el-select v-model="dataForm.ROLE_ID" placeholder="请选择" style="width: 100%;">
-            <el-option
-              v-for="item in roles"
-              :key="item.ROLE_ID"
-              :label="item.ROLE_NAME"
-              :value="item.ROLE_ID"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属用户" prop="CREATE_USER">
-          <el-select v-model="dataForm.CREATE_USER" placeholder="请选择" style="width: 100%;">
-            <el-option
-              v-for="item in belonglist"
-              :key="item.USER_ID"
-              :label="item.USER_NAME"
-              :value="item.USER_ID"
-            ></el-option>
-          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -288,8 +250,7 @@ export default {
       filters: {
         USER_TYPE: "1",
         USER_NAME: "",
-        USER_ACCOUNT: "",
-        BELONGUSER: ""
+        USER_ACCOUNT: ""
       },
       columns: [],
       filterColumns: [],
@@ -330,11 +291,8 @@ export default {
         USER_PHONE: "",
         BANK_ACCOUNT: "",
         BANK_NAME: "",
-        ROLE_ID: "",
-        CREATE_USER:''
-      },
-  belonglist:[],
-      roles: []
+        ROLE_ID: "9575d945d2e7464f8685cc155beab716"
+      }
     };
   },
   methods: {
@@ -354,17 +312,9 @@ export default {
         size: JSON.stringify(this.pageRequest.size)
       });
       this.loading = true;
-      this.$api.user.findPage(searchForm).then(res => {
+      this.$api.user.findBelong(searchForm).then(res => {
         this.pageResult = res.result;
-        this.findUserRoles();
-        this.findBelongUser();
         this.loading = false;
-      });
-    },
-    // 加载用户角色信息
-    findBelongUser: function() {
-      this.$api.user.belongUserList().then(res => {
-        this.belonglist = res.result;
       });
     },
     // // 加载用户角色信息
@@ -377,23 +327,19 @@ export default {
     // 批量删除
     handleDelete: function(data) {
       this.$confirm("确认进行删除么？", "提示", {}).then(() => {
-       this.$api.user.batchDelete(data).then(res => {
-        this.editLoading = false;
-        if (res.success) {
-          this.$message({ message: "操作成功", type: "success" });
-        } else {
-          this.$message({
-            message: "操作失败, " + res.result,
-            type: "error"
-          });
-        }
-        this.findPage(false);
+        this.$api.user.batchDelete(data).then(res => {
+          this.editLoading = false;
+          if (res.success) {
+            this.$message({ message: "操作成功", type: "success" });
+          } else {
+            this.$message({
+              message: "操作失败, " + res.result,
+              type: "error"
+            });
+          }
+          this.findPage(false);
+        });
       });
-      });
-    },
-    handleOtherConf: function(data) {
-      this.userConfData.V_USER_ID = data.USER_ID;
-      this.showPayConf = true;
     },
     handleRate: function(data) {
       this.rateConf.V_USER_ID = data.USER_ID;
@@ -415,8 +361,7 @@ export default {
         USER_PHONE: "",
         BANK_ACCOUNT: "",
         BANK_NAME: "",
-        ROLE_ID: "",
-        CREATE_USER:''
+        ROLE_ID: "9575d945d2e7464f8685cc155beab716"
       };
     },
     // 显示编辑界面
@@ -424,13 +369,6 @@ export default {
       this.dialogVisible = true;
       this.operation = false;
       this.dataForm = Object.assign({}, params);
-    },
-    settUserLevel: function(data) {
-      let params = {
-        USER_ID: data.USER_ID,
-        USER_LEVEL: data.USER_LEVEL
-      };
-      this.settingUser(params);
     },
     userMatch: function(data) {
       let params = {
@@ -604,13 +542,12 @@ export default {
       this.columns = [
         { prop: "USER_ACCOUNT", label: "用户名", minWidth: 120 },
         { prop: "USER_NAME", label: "真实姓名", minWidth: 120 },
-        { prop: "BELONG_USER", label: "所属用户", minWidth: 120 },
         { prop: "V_COUNT_RECEIVABLES", label: "总收款", minWidth: 120 },
         { prop: "V_SURPLUS_BOND", label: "剩余保证金", minWidth: 120 },
-        { prop: "V_ALI_RECEIVABLES", label: "支付宝收款", minWidth: 120 },
         { prop: "RATE_COUNT", label: "返佣金额", minWidth: 120 },
         { prop: "USER_RATE", label: "费率", minWidth: 120 },
         { prop: "V_WX_RECEIVABLES", label: "微信收款", minWidth: 120 },
+        { prop: "V_ALI_RECEIVABLES", label: "支付宝收款", minWidth: 120 },
         { prop: "USER_PHONE", label: "手机号", minWidth: 100 },
         { prop: "BANK_ACCOUNT", label: "银行卡号", minWidth: 120 },
         { prop: "BANK_NAME", label: "银行名称", minWidth: 100 }

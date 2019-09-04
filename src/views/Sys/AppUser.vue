@@ -30,7 +30,12 @@
       </el-form>
     </div>
     <!--表格内容栏-->
-    <el-table :data="pageResult.content" style="width: 100%"  v-loading="loading" :element-loading-text="$t('action.loading')">
+    <el-table
+      :data="pageResult.content"
+      style="width: 100%"
+      v-loading="loading"
+      :element-loading-text="$t('action.loading')"
+    >
       <el-table-column
         v-for="column in filterColumns"
         header-align="center"
@@ -183,10 +188,10 @@ export default {
   },
   data() {
     return {
-      loading:false,
+      loading: false,
       size: "small",
       filters: {
-        USER_TYPE:"2",
+        USER_TYPE: "2",
         USER_NAME: "",
         USER_ACCOUNT: ""
       },
@@ -266,17 +271,19 @@ export default {
     },
     // 批量删除
     handleDelete: function(data) {
-      this.$api.user.batchDelete(data).then(res => {
-        this.editLoading = false;
-        if (res.success) {
-          this.$message({ message: "操作成功", type: "success" });
-        } else {
-          this.$message({
-            message: "操作失败, " + res.msg,
-            type: "error"
-          });
-        }
-        this.findPage(false);
+      this.$confirm("确认进行删除么？", "提示", {}).then(() => {
+        this.$api.user.batchDelete(data).then(res => {
+          this.editLoading = false;
+          if (res.success) {
+            this.$message({ message: "操作成功", type: "success" });
+          } else {
+            this.$message({
+              message: "操作失败, " + res.result,
+              type: "error"
+            });
+          }
+          this.findPage(false);
+        });
       });
     },
     handleOtherConf: function(data) {
@@ -329,7 +336,7 @@ export default {
           if (res.success) {
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }
@@ -357,7 +364,7 @@ export default {
             this.passwordConf.PASSWORD = "";
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }
@@ -386,7 +393,7 @@ export default {
               this.userConfData.V_PAY_NUM = 0;
             } else {
               this.$message({
-                message: "操作失败, " + res.msg,
+                message: "操作失败, " + res.result,
                 type: "error"
               });
             }
@@ -418,7 +425,7 @@ export default {
                   this.$refs["dataForm"].resetFields();
                 } else {
                   this.$message({
-                    message: "操作失败, " + res.msg,
+                    message: "操作失败, " + res.result,
                     type: "error"
                   });
                 }

@@ -9,7 +9,7 @@
     >
       <img v-if="collapse" src="@/assets/logo.jpeg">
       <div>
-        <img v-if="!collapse" src="@/assets/big-logo.png" class="big-img">
+        <img v-if="!collapse" src="@/assets/ds-logo.png" class="big-img">
       </div>
     </div>
     <!-- 导航菜单 -->

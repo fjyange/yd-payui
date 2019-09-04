@@ -7,7 +7,25 @@
       <div v-for="o in 4" :key="o" class="text item">{{'列表内容 ' + o }}</div>
     </el-card>-->
     <!-- <img src="http://193.112.135.244/authorize/attach/getFile?id=04214236ba0a425b92db4243ac40c1fc"> -->
-    <el-card class="box-card" v-if="showData.SHOW_APP == 'Y'">
+    <el-card class="box-card" v-if="showData.SHOW_USER_TYPE == '0'">
+      <div class="box-content">
+        <p>{{showData.ORDER_MONEY}}</p>
+        <p>订单总额</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.SUCCESCC_RATE}}</p>
+        <p>订单成功率</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.ORDER_WX_MONEY}}</p>
+        <p>微信订单总额</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.ORDER_ALI_MONEY}}</p>
+        <p>支付宝订单总额</p>
+      </div>
+    </el-card>
+    <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '2'">
       <div class="box-content" style="width:93%">
         <p>{{showData.COUNT_MONEY}}</p>
         <p>总收款</p>
@@ -21,7 +39,7 @@
         <p>支付宝收款</p>
       </div>
     </el-card>
-     <el-card class="box-card" v-if="showData.SHOW_APP == 'N'">
+     <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '1'">
       <div class="box-content">
         <p>{{showData.COUNT_MONEY}}</p>
         <p>总收款</p>
@@ -37,6 +55,34 @@
       <div class="box-content">
         <p>{{showData.ALI_MONEY}}</p>
         <p>支付宝收款</p>
+      </div>
+    </el-card>
+    <el-card class="box-card" v-if="showData.SHOW_USER_TYPE == '0'">
+      <div class="box-content" style="width:93%">
+        <p>{{showData.APP_TOTAL_COUNT}}</p>
+        <p>平台总收款</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.APP_CASH_COUNT}}</p>
+        <p>平台可提现金额</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.COMMISSION_MONEY}}</p>
+        <p>平台已提现金额</p>
+      </div>
+    </el-card>
+    <el-card class="box-card" v-if="showData.SHOW_USER_TYPE == '0'">
+      <div class="box-content" style="width:93%">
+        <p>{{showData.USER_TOTAL_COUNT}}</p>
+        <p>用户总收款</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.USER_TOTAL_SURPLUS}}</p>
+        <p>用户剩余保证金</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.ACCOUNT_TOTAL_COUNT}}</p>
+        <p>账户总收款</p>
       </div>
     </el-card>
     <el-card class="box-card">
@@ -102,7 +148,7 @@ export default {
               this.$message({ message: "操作成功", type: "success" });
             } else {
               this.$message({
-                message: "操作失败, " + res.msg,
+                message: "操作失败, " + res.result,
                 type: "error"
               });
             }
@@ -126,7 +172,7 @@ export default {
               this.$message({ message: "操作成功", type: "success" });
             } else {
               this.$message({
-                message: "操作失败, " + res.msg,
+                message: "操作失败, " + res.result,
                 type: "error"
               });
             }

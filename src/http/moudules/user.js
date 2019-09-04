@@ -28,6 +28,14 @@ export const findPage = (data) => {
     data
   })
 }
+// 分页查询
+export const findBelong = (data) => {
+  return axios({
+    url: '/user/findBelong',
+    method: 'post',
+    data
+  })
+}
 
 // 用户配置修改
 export const userConf = (data) => {
@@ -67,5 +75,19 @@ export const passwordConf = (data) => {
   return axios({
     url: '/user/passwordConf',
     method: 'post',data
+  })
+}
+
+export const rateConf = (data) => {
+  return axios({
+    url: '/user/rateConf',
+    method: 'post',data
+  })
+}
+
+export const belongUserList = () => {
+  return axios({
+    url: '/user/belongUserList',
+    method: 'post'
   })
 }

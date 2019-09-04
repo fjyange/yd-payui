@@ -136,7 +136,7 @@ export default {
 								this.dialogVisible = false
 								this.$refs['dataForm'].resetFields()
 							} else {
-								this.$message({message: '操作失败, ' + res.msg, type: 'error'})
+								this.$message({message: '操作失败, ' + res.result, type: 'error'})
 							}
 							this.findPage(null)
 						}).catch(res => {

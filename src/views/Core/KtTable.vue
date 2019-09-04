@@ -235,7 +235,7 @@ export default {
               this.$message({ message: "删除成功", type: "success" });
               this.findPage();
             } else {
-              this.$message({ message: "操作失败, " + res.msg, type: "error" });
+              this.$message({ message: "操作失败, " + res.result, type: "error" });
             }
             this.loading = false;
           };

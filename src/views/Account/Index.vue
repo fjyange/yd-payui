@@ -116,7 +116,7 @@
           <kt-button
             icon="fa fa-edit"
             label="支付金额配置"
-            perms="sys:account:edit"
+            perms="sys:account:set"
             :size="size"
             @click="handlePayConf(scope.row)"
           />
@@ -205,7 +205,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://193.112.135.244/authorize/attach/fileUpload"
+            action="http://120.24.184.96/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -311,7 +311,7 @@ export default {
             this.$message({ message: "操作成功", type: "success" });
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }
@@ -344,7 +344,8 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://193.112.135.244/authorize/attach/getFile?ID=" + id;
+      return "http://120.24.184.96/authorize/attach/getFile?ID=" + id;
+      // return "http://120.24.93.47/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
@@ -361,7 +362,7 @@ export default {
               this.dialogPayConf = false;
             } else {
               this.$message({
-                message: "操作失败, " + res.msg,
+                message: "操作失败, " + res.result,
                 type: "error"
               });
             }
@@ -395,7 +396,7 @@ export default {
                   this.$refs["dataForm"].resetFields();
                 } else {
                   this.$message({
-                    message: "操作失败, " + res.msg,
+                    message: "操作失败, " + res.result,
                     type: "error"
                   });
                 }
@@ -491,7 +492,7 @@ export default {
           if (res.success) {
           } else {
             this.$message({
-              message: "操作失败, " + res.msg,
+              message: "操作失败, " + res.result,
               type: "error"
             });
           }
