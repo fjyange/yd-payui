@@ -34,7 +34,7 @@
           <kt-button
             icon="fa fa-plus"
             label="导出平台统计"
-            perms="sys:charge:export"
+            perms="sys:order:export"
             type="primary"
             @click="exportAppData"
           />
@@ -43,7 +43,7 @@
           <kt-button
             icon="fa fa-plus"
             label="导出用户统计"
-            perms="sys:charge:export"
+            perms="sys:order:export"
             type="primary"
             @click="exportUserData"
           />
