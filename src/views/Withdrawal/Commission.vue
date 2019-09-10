@@ -4,7 +4,7 @@
     <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
       <el-form :inline="true" :model="filters" :size="size">
         <el-form-item>
-          <el-input v-model="filters.USER_NAME" placeholder="提现申请人"></el-input>
+          <el-input v-model="filters.V_APP_NAME" placeholder="提现申请人"></el-input>
         </el-form-item>
         <el-form-item>
           <kt-button
@@ -22,6 +22,24 @@
             perms="sys:commission:add"
             type="primary"
             @click="handleAdd"
+          />
+        </el-form-item>
+        <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出今日统计数据"
+            perms="sys:commission:export"
+            type="primary"
+            @click="exportCountData"
+          />
+        </el-form-item>
+        <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出今日明细数据"
+            perms="sys:commission:export"
+            type="primary"
+            @click="exportDetailData"
           />
         </el-form-item>
       </el-form>
@@ -142,7 +160,7 @@ export default {
       loading: false,
       size: "small",
       filters: {
-        USER_NAME: ""
+        V_APP_NAME: ""
       },
       columns: [],
       filterColumns: [],
@@ -187,6 +205,12 @@ export default {
         .then(res=>{
           
         });
+    },
+    exportCountData:function(){
+        window.open(this.global.baseUrl + "/export/todayCommisionExportCount")
+    },
+    exportDetailData:function(){
+        window.open(this.global.baseUrl + "/export/todayCommisionExportDetail?V_APP_NAME="+this.filters.V_APP_NAME);
     },
     // 显示新增界面
     handleAdd: function() {

@@ -30,6 +30,24 @@
             @click="findPage(false)"
           />
         </el-form-item>
+         <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出平台统计"
+            perms="sys:charge:export"
+            type="primary"
+            @click="exportAppData"
+          />
+        </el-form-item>
+         <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出用户统计"
+            perms="sys:charge:export"
+            type="primary"
+            @click="exportUserData"
+          />
+        </el-form-item>
       </el-form>
     </div>
 
@@ -66,7 +84,7 @@
       <el-table-column header-align="center" align="center" width="180" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
-            v-if="scope.row.V_STATUS ==='2'"
+            v-if="scope.row.V_STATUS =='2'"
             icon="fa fa-edit"
             label="补单"
             type="danger"
@@ -76,7 +94,7 @@
             :loading="editLoading"
           />
           <kt-button
-            v-if="scope.row.V_STATUS ==='0'"
+            v-if="scope.row.V_STATUS =='0'"
             icon="fa fa-edit"
             label="确认"
             perms="sys:order:confirm"
@@ -212,7 +230,13 @@ export default {
       } else if (row.V_STATUS == "4") {
         return "warning-row";
       }
-    }
+    },
+      exportUserData:function(){
+        window.open(this.global.baseUrl + "/export/todayUserOrderExportCount?USER_NAME="+this.filters.USER_NAME)
+    },
+    exportAppData:function(){
+        window.open(this.global.baseUrl + "/export/todayAPPOrderExportCount?V_APP_NAME="+this.filters.V_APP_NAME);
+    },
   },
   mounted() {
     this.findPage(false);

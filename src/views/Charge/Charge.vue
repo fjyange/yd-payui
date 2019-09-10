@@ -24,6 +24,24 @@
             @click="handleAdd"
           />
         </el-form-item>
+         <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出今日统计"
+            perms="sys:charge:export"
+            type="primary"
+            @click="exportCountData"
+          />
+        </el-form-item>
+         <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出今日统计"
+            perms="sys:charge:export"
+            type="primary"
+            @click="exportDetailData"
+          />
+        </el-form-item>
       </el-form>
     </div>
     <!--表格内容栏-->
@@ -203,6 +221,12 @@ export default {
         .then(res=>{
 
         });
+    },
+    exportCountData:function(){
+        window.open(this.global.baseUrl + "/export/todayTopupExportCount")
+    },
+    exportDetailData:function(){
+        window.open(this.global.baseUrl + "/export/todayTopupExportDetail?USER_NAME="+this.filters.USER_NAME);
     },
     // 显示新增界面
     handleAdd: function() {

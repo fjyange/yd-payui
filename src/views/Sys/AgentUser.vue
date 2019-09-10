@@ -611,6 +611,7 @@ export default {
         { prop: "RATE_COUNT", label: "返佣金额", minWidth: 120 },
         { prop: "USER_RATE", label: "费率", minWidth: 120 },
         { prop: "V_WX_RECEIVABLES", label: "微信收款", minWidth: 120 },
+        { prop: "BELONG_COUNT", label: "下属代理收款", minWidth: 120 },
         { prop: "USER_PHONE", label: "手机号", minWidth: 100 },
         { prop: "BANK_ACCOUNT", label: "银行卡号", minWidth: 120 },
         { prop: "BANK_NAME", label: "银行名称", minWidth: 100 }
