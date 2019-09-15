@@ -13,6 +13,7 @@ import * as charge from './moudules/charge'
 import * as dict from './moudules/dict'
 import * as commission from './moudules/commission'
 import * as home from './moudules/home'
+import * as send from './moudules/send'
 
 
 
@@ -29,5 +30,6 @@ export default {
     withdrawal,
     dict,
     commission,
-    home
+    home,
+    send
 }
