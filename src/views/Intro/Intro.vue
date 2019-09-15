@@ -119,6 +119,11 @@
         <span>开启系统</span>
       </div>
     </el-card>
+    <el-card class="box-card" v-if="showData.SYS_SHOW == 'Y'">
+      <div class="match" @click="editData()">
+        <span>数据回正</span>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -131,6 +136,30 @@ export default {
     };
   },
   methods: {
+    editData:function(){
+      this.$confirm("确认数据回正么？", "提示", {}).then(() => {
+        this.$api.send
+          .dealErrorData()
+          .then(res => {
+            if (res.success) {
+              this.showHome();
+              this.$message({ message: "操作成功", type: "success" });
+            } else {
+              this.$message({
+                message: "操作失败, " + res.result,
+                type: "error"
+              });
+            }
+          })
+          .catch(res => {
+            this.editLoading = false;
+            this.$message({
+              message: res.message,
+              type: "error"
+            });
+          });
+      });
+    },
     operate: function(value) {
       let msg = "确认开启系统么？";
       if (value == "off") {
