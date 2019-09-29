@@ -82,16 +82,18 @@
         </template>
       </el-table-column>
       <el-table-column header-align="center" align="center" width="180" prop="V_STATUS" label="操作">
+       
         <template slot-scope="scope">
           <kt-button
-            v-if="scope.row.V_STATUS =='2'"
+            v-if="scope.row.V_STATUS == 2 || scope.row.V_STATUS =='2'"
             icon="fa fa-edit"
             label="补单"
             type="danger"
             perms="sys:order:bd"
             :size="size"
             @click="orderBD(scope.row)"
-            :loading="editLoading"
+            :loading="editLoading" 
+            key="1"
           />
           <kt-button
             v-if="scope.row.V_STATUS =='0'"
@@ -101,6 +103,7 @@
             :size="size"
             @click="orderPass(scope.row)"
             :loading="editLoading"
+            key="2"
           />
         </template>
       </el-table-column>
