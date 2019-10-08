@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api/': {
-        target: 'http://localhost:8080/yunduanpay/authorize/',
+        target: 'http://120.79.5.65:8080/yunduanpay/authorize/',
         // target: 'http://120.24.93.47/authorize',
         // target: 'http://120.79.91.63/authorize',
         // target: 'http://193.112.135.244/authorize/',
