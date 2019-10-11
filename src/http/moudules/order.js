@@ -10,6 +10,15 @@ export const findPage = (data) => {
     })
 }
 
+// 分页查询
+export const findHistory = (data) => {
+    return axios({
+        url: '/order/findHistory',
+        method: 'post',
+        data
+    })
+}
+
 export const audit = (data) => {
     return axios({
         url: '/order/audit',

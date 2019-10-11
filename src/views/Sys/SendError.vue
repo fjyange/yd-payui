@@ -1,5 +1,25 @@
 <template>
   <div class="page-container">
+    <!--工具栏-->
+    <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
+      <el-form :inline="true" :model="filters" :size="size">
+        <el-form-item>
+          <el-input v-model="filters.V_ORDER_NO" placeholder="单号"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="filters.V_APP_NAME" placeholder="所属用户"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <kt-button
+            icon="fa fa-search"
+            :label="$t('action.search')"
+            perms="sys:send:search"
+            type="primary"
+            @click="findPage(true)"
+          />
+        </el-form-item>
+      </el-form>
+    </div>
     <!--表格内容栏-->
     <el-table
       :data="pageResult.content"
@@ -21,16 +41,15 @@
         :formatter="column.formatter"
         :sortable="column.sortable==null?true:column.sortable"
       ></el-table-column>
-      
-      <el-table-column fixed="right" align="center" width="400" label="操作">
+
+      <el-table-column fixed="right" align="center" width="100" label="操作">
         <template slot-scope="scope">
           <kt-button
-            icon="fa fa-trash"
-            :label="$t('action.delete')"
-            perms="sys:user:delete"
+            icon="fa fa-edit"
+            label="重新发送"
+            perms="sys:send:deal"
             :size="size"
-            type="danger"
-            @click="handleDelete(scope.row)"
+            @click="dealOrder(scope.row)"
           />
         </template>
       </el-table-column>
@@ -47,8 +66,6 @@
         style="float:right;"
       ></el-pagination>
     </div>
-
-   
   </div>
 </template>
 
@@ -68,11 +85,16 @@ export default {
   data() {
     return {
       loading: false,
-      
+      size: "small",
+      filters: {
+        V_ORDER_NO: "",
+        V_APP_NAME: ""
+      },
       filterColumns: [],
       pageRequest: { page: 1, size: 10 },
       pageResult: {},
-    }
+      editLoading: false
+    };
   },
   methods: {
     // 换页刷新
@@ -108,21 +130,38 @@ export default {
     // 处理表格列过滤显示
     initColumns: function() {
       this.columns = [
-        { prop: "USER_ACCOUNT", label: "用户名", minWidth: 120 },
-        { prop: "USER_NAME", label: "真实姓名", minWidth: 120 },
-        { prop: "BELONG_USER", label: "所属用户", minWidth: 120 },
-        { prop: "V_COUNT_RECEIVABLES", label: "总收款", minWidth: 120 },
-        { prop: "V_SURPLUS_BOND", label: "剩余保证金", minWidth: 120 },
-        { prop: "V_ALI_RECEIVABLES", label: "支付宝收款", minWidth: 120 },
-        { prop: "RATE_COUNT", label: "返佣金额", minWidth: 120 },
-        { prop: "USER_RATE", label: "费率", minWidth: 120 },
-        { prop: "V_WX_RECEIVABLES", label: "微信收款", minWidth: 120 },
-        { prop: "BELONG_COUNT", label: "下属代理收款", minWidth: 120 },
-        { prop: "USER_PHONE", label: "手机号", minWidth: 100 },
-        { prop: "BANK_ACCOUNT", label: "银行卡号", minWidth: 120 },
-        { prop: "BANK_NAME", label: "银行名称", minWidth: 100 }
+        { prop: "V_ORDER_NO", label: "单号", minWidth: 120 },
+        { prop: "V_APP_NAME", label: "所属平台", minWidth: 120 },
+        { prop: "V_SEND_TIME", label: "发送时间", minWidth: 120 },
+        { prop: "V_RETURN_TIME", label: "返回时间", minWidth: 120 },
+        { prop: "V_RETURN_MSG", label: "返回内容", minWidth: 200 }
       ];
       this.filterColumns = JSON.parse(JSON.stringify(this.columns));
+    },
+    dealOrder: function(data) {
+      this.$confirm("确定重发订单么？", "提示", {}).then(() => {
+        let params = {
+          ID: data.ID
+        };
+        this.editLoading = true;
+        this.$api.send
+          .dealSend(params)
+          .then(res => {
+            this.editLoading = false;
+            if (res.success) {
+              this.$message({ message: "操作成功", type: "success" });
+              this.findPage(false);
+            } else {
+            }
+          })
+          .catch(res => {
+            this.editLoading = false;
+            this.$message({
+              message: res.message,
+              type: "error"
+            });
+          });
+      });
     }
   },
   mounted() {
