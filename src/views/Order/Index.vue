@@ -296,7 +296,6 @@ export default {
       );
     },
     exportOrderData: function() {
-      alert(sessionStorage.getItem("IS_ADMIN"));
       window.open(
         this.global.baseUrl +
           "/export/exportOrder?USER_ID=" +
