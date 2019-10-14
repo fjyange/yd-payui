@@ -53,10 +53,13 @@
     >
       <el-table-column header-align="center" align="center" prop="V_MONEY" label="提现金额"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_RATE" label="提现费率"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="V_FORMALITIES" label="提现手续费"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="V_REALITY" label="实际到账金额"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_FORMALITIES" label="手续费"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_REALITY" label="到账金额"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_APP_NAME" label="提现平台"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="V_COMMISSION_TIME" label="提现申请时间"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_BANK_NAME" label="银行名"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_BANK_USER" label="开户名"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_BANK_ACCOUNT" label="银行账号"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_COMMISSION_TIME" label="申请时间"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_STATUS" label="申请状态">
         <template slot-scope="scope">
           <span style="color:red" v-if="scope.row.V_STATUS =='2'">提现失败</span>
@@ -119,6 +122,15 @@
         <el-form-item label="提现金额" prop="V_MONEY">
           <el-input v-model="dataForm.V_MONEY" auto-complete="off" @change="calcutMoney"></el-input>
         </el-form-item>
+        <el-form-item label="银行名" prop="V_BANK_NAME">
+          <el-input v-model="dataForm.V_BANK_NAME" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="银行开户名" prop="V_BANK_USER">
+          <el-input v-model="dataForm.V_BANK_USER" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="银行账号" prop="V_BANK_ACCOUNT">
+          <el-input v-model="dataForm.V_BANK_ACCOUNT" auto-complete="off"></el-input>
+        </el-form-item>
         <el-form-item label="费率" prop="V_RATE">
           <el-input v-model="dataForm.V_RATE" auto-complete="off" :disabled="true"></el-input>
         </el-form-item>
@@ -175,7 +187,10 @@ export default {
         V_MONEY: 0,
         V_REALITY: 0,
         V_RATE: "",
-        V_FORMALITIES: ""
+        V_FORMALITIES: "",
+        V_BANK_NAME:'',
+        V_BANK_USER:'',
+        V_BANK_ACCOUNT:''
       }
     };
   },
@@ -221,7 +236,10 @@ export default {
         V_MONEY: 0,
         V_REALITY: 0,
         V_RATE: "",
-        V_FORMALITIES: ""
+        V_FORMALITIES: "",
+        V_BANK_NAME:'',
+        V_BANK_USER:'',
+        V_BANK_ACCOUNT:''
       };
       this.$api.commission
         .getRate()
