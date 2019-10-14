@@ -83,7 +83,9 @@ export default {
             .then(res => {
               if (res.success) {
                 Cookies.set("token", res.result.token); // 放置token到Cookie
-                sessionStorage.setItem("user", userInfo.ACCOUNT); // 保存用户到本地会话
+                sessionStorage.setItem("USER_ID", res.result.USER_ID); // 保存用户到本地会话
+                sessionStorage.setItem("IS_ADMIN", res.result.IS_ADMIN); // 保存用户到本地会话
+                sessionStorage.setItem("user", res.result.USER_ACCOUNT); // 保存用户到本地会话
                 this.$store.commit("menuRouteLoaded", false); // 要求重新加载导航菜单
                 this.$router.push("/"); // 登录成功，跳转到主页
               }

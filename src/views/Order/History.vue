@@ -13,6 +13,25 @@
           <el-input v-model="filters.V_ORDER_NO" placeholder="订单号"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-select v-model="filters.V_STATUS" clearable placeholder="订单状态">
+            <el-option
+              v-for="item in statusList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="filters.SEARCH_TIME"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="订单开始日期"
+            end-placeholder="订单结束日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
           <kt-button
             icon="fa fa-search"
             :label="$t('action.search')"
@@ -28,6 +47,15 @@
             perms="sys:order:search"
             type="primary"
             @click="findPage(false)"
+          />
+        </el-form-item>
+        <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出订单数据"
+            perms="sys:order:orderExport"
+            type="primary"
+            @click="exportOrderData"
           />
         </el-form-item>
       </el-form>
@@ -95,10 +123,30 @@ export default {
       loading: false,
       className: "",
       size: "small",
+      statusList: [
+        {
+          value: "0",
+          label: "待确认"
+        },
+        {
+          value: "1",
+          label: "已确认"
+        },
+        {
+          value: "2",
+          label: "超时"
+        },
+        {
+          value: "3",
+          label: "补单"
+        }
+      ],
       filters: {
         USER_NAME: "",
         V_APP_NAME: "",
-        V_ORDER_NO: ""
+        V_ORDER_NO: "",
+        V_STATUS: "",
+        SEARCH_TIME: ""
       },
       columns: [],
       filterColumns: [],
@@ -143,6 +191,25 @@ export default {
       } else if (row.V_STATUS == "4") {
         return "warning-row";
       }
+    },
+    exportOrderData: function() {
+      window.open(
+        this.global.baseUrl +
+          "/export/exportOrderHistory?USER_ID=" +
+          sessionStorage.getItem("USER_ID") +
+          "&IS_ADMIN=" +
+          sessionStorage.getItem("IS_ADMIN") +
+          "&V_APP_NAME=" +
+          this.filters.V_APP_NAME +
+          "&USER_NAME=" +
+          this.filters.USER_NAME +
+          "&V_ORDER_NO=" +
+          this.filters.V_ORDER_NO +
+          "&SEARCH_TIME=" +
+          this.filters.SEARCH_TIME +
+          "&V_STATUS=" +
+          this.filters.V_STATUS
+      );
     }
   },
   mounted() {

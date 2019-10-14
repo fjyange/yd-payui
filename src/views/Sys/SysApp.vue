@@ -120,6 +120,9 @@
         <el-form-item label="费率" prop="V_RATE">
           <el-input v-model="dataForm.V_RATE" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="手续费" prop="V_FORMALITIES">
+          <el-input v-model="dataForm.V_FORMALITIES" auto-complete="off"></el-input>
+        </el-form-item>
         <el-form-item label="平台名称" prop="V_APP_NAME">
           <el-input v-model="dataForm.V_APP_NAME" auto-complete="off"></el-input>
         </el-form-item>
@@ -191,7 +194,8 @@ export default {
         V_APP_NAME: [
           { required: true, message: "请输入平台名称", trigger: "blur" }
         ],
-        V_RATE: [{ required: true, message: "请输入费率", trigger: "blur" }]
+        V_RATE: [{ required: true, message: "请输入费率", trigger: "blur" }],
+        V_FORMALITIES: [{ required: true, message: "请输入手续费", trigger: "blur" }]
       },
       // 新增编辑界面数据
       dataForm: {
@@ -201,7 +205,8 @@ export default {
         V_APP_NAME: "",
         V_USER_PHONE: "",
         V_ROLE_ID: "",
-        V_RATE: ""
+        V_RATE: "",
+        V_FORMALITIES:''
       },
       deptData: [],
       deptTreeProps: {
@@ -271,7 +276,8 @@ export default {
         V_APP_NAME: "",
         V_USER_PHONE: "",
         V_ROLE_ID: "",
-        V_RATE: ""
+        V_RATE: "",
+        V_FORMALITIES:""
       };
     },
     // 显示编辑界面

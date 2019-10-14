@@ -13,6 +13,27 @@
           <el-input v-model="filters.V_ORDER_NO" placeholder="订单号"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-time-picker
+            is-range
+            v-model="filters.SEARCH_TIME"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            placeholder="选择订单时间范围"
+          ></el-time-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-select v-model="filters.V_STATUS" clearable placeholder="订单状态">
+            <el-option
+              v-for="item in statusList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
           <kt-button
             icon="fa fa-search"
             :label="$t('action.search')"
@@ -30,7 +51,7 @@
             @click="findPage(false)"
           />
         </el-form-item>
-         <el-form-item>
+        <el-form-item>
           <kt-button
             icon="fa fa-plus"
             label="导出平台统计"
@@ -39,7 +60,7 @@
             @click="exportAppData"
           />
         </el-form-item>
-         <el-form-item>
+        <el-form-item>
           <kt-button
             icon="fa fa-plus"
             label="导出用户统计"
@@ -48,13 +69,22 @@
             @click="exportUserData"
           />
         </el-form-item>
+        <el-form-item>
+          <kt-button
+            icon="fa fa-plus"
+            label="导出订单"
+            perms="sys:order:orderExport"
+            type="primary"
+            @click="exportOrderData"
+          />
+        </el-form-item>
       </el-form>
     </div>
 
     <!--表格内容栏-->
     <el-table
       :data="pageResult.content"
-      style="width: 100%" 
+      style="width: 100%"
       class="order_tb"
       :row-class-name="tableRowClassName"
       v-loading="loading"
@@ -141,10 +171,30 @@ export default {
       loading: false,
       className: "",
       size: "small",
+      statusList: [
+        {
+          value: "0",
+          label: "待确认"
+        },
+        {
+          value: "1",
+          label: "已确认"
+        },
+        {
+          value: "2",
+          label: "超时"
+        },
+        {
+          value: "3",
+          label: "补单"
+        }
+      ],
       filters: {
         USER_NAME: "",
         V_APP_NAME: "",
-        V_ORDER_NO: ""
+        V_ORDER_NO: "",
+        SEARCH_TIME: "",
+        V_STATUS: ""
       },
       columns: [],
       filterColumns: [],
@@ -204,7 +254,7 @@ export default {
       });
     },
     audit: function(params) {
-      this.editLoading = true
+      this.editLoading = true;
       this.$api.order
         .audit(params)
         .then(res => {
@@ -234,12 +284,40 @@ export default {
         return "warning-row";
       }
     },
-      exportUserData:function(){
-        window.open(this.global.baseUrl + "/export/todayUserOrderExportCount?USER_NAME="+this.filters.USER_NAME)
+    exportUserData: function() {
+      window.open(
+        this.global.baseUrl +
+          "/export/todayUserOrderExportCount?USER_NAME=" +
+          this.filters.USER_NAME
+      );
     },
-    exportAppData:function(){
-        window.open(this.global.baseUrl + "/export/todayAPPOrderExportCount?V_APP_NAME="+this.filters.V_APP_NAME);
+    exportAppData: function() {
+      window.open(
+        this.global.baseUrl +
+          "/export/todayAPPOrderExportCount?V_APP_NAME=" +
+          this.filters.V_APP_NAME
+      );
     },
+    exportOrderData: function() {
+      alert(sessionStorage.getItem("IS_ADMIN"));
+      window.open(
+        this.global.baseUrl +
+          "/export/exportOrder?USER_ID=" +
+          sessionStorage.getItem("USER_ID") +
+          "&IS_ADMIN=" +
+          sessionStorage.getItem("IS_ADMIN") +
+          "&V_APP_NAME=" +
+          this.filters.V_APP_NAME +
+          "&USER_NAME=" +
+          this.filters.USER_NAME +
+          "&V_ORDER_NO=" +
+          this.filters.V_ORDER_NO +
+          "&SEARCH_TIME=" +
+          this.filters.SEARCH_TIME +
+          "&V_STATUS = " +
+          this.filters.V_STATUS
+      );
+    }
   },
   mounted() {
     this.findPage(false);
@@ -261,7 +339,7 @@ export default {
 .el-table .bd-row {
   background: #eaf518;
 }
-.order_tb .el-table__body tr:hover>td {
-background: none !important;
+.order_tb .el-table__body tr:hover > td {
+  background: none !important;
 }
 </style>
