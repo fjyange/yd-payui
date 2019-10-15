@@ -299,23 +299,25 @@ export default {
       );
     },
     exportOrderData: function() {
-      window.open(
-        this.global.baseUrl +
-          "/export/exportOrder?USER_ID=" +
-          sessionStorage.getItem("USER_ID") +
-          "&IS_ADMIN=" +
-          sessionStorage.getItem("IS_ADMIN") +
-          "&V_APP_NAME=" +
-          this.filters.V_APP_NAME +
-          "&USER_NAME=" +
-          this.filters.USER_NAME +
-          "&V_ORDER_NO=" +
-          this.filters.V_ORDER_NO +
-          "&SEARCH_TIME=" +
-          this.filters.SEARCH_TIME +
-          "&V_STATUS = " +
-          this.filters.V_STATUS
-      );
+      this.$confirm("确认导出订单么？", "提示", {}).then(() => {
+        window.open(
+          this.global.baseUrl +
+            "/export/exportOrder?USER_ID=" +
+            sessionStorage.getItem("USER_ID") +
+            "&IS_ADMIN=" +
+            sessionStorage.getItem("IS_ADMIN") +
+            "&V_APP_NAME=" +
+            this.filters.V_APP_NAME +
+            "&USER_NAME=" +
+            this.filters.USER_NAME +
+            "&V_ORDER_NO=" +
+            this.filters.V_ORDER_NO +
+            "&SEARCH_TIME=" +
+            this.filters.SEARCH_TIME +
+            "&V_STATUS = " +
+            this.filters.V_STATUS
+        );
+      });
     }
   },
   mounted() {
