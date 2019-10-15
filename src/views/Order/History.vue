@@ -24,7 +24,8 @@
         </el-form-item>
         <el-form-item>
           <el-date-picker
-            v-model="filters.SEARCH_TIME"
+            v-model="filters.SEARCH_TIME" 
+            value-format="yyyy-MM-dd HH:mm:ss"
             type="datetimerange"
             range-separator="至"
             start-placeholder="订单开始日期"
