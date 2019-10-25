@@ -95,7 +95,7 @@
       <el-pagination
         layout="total, prev, pager, next, jumper"
         @current-change="refreshPageRequest"
-        :current-page="pageResult.page"
+        :current-page="pageRequest.page"
         :page-size="pageResult.size"
         :total="pageResult.totalElements"
         style="float:right;"
