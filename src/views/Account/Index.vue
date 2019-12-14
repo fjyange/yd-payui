@@ -178,7 +178,7 @@
     >
       <el-form
         :model="dataForm"
-        label-width="80px"
+        label-width="100px"
         :rules="dataFormRules"
         ref="dataForm"
         :size="size"
@@ -189,6 +189,9 @@
         </el-form-item>
         <el-form-item label="账户名" prop="V_PAY_NAME">
           <el-input v-model="dataForm.V_PAY_NAME" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="支付宝地址" prop="V_URL_SCHEME">
+          <el-input v-model="dataForm.V_URL_SCHEME" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="支付类型" prop="V_PAY_TYPE">
           <el-select v-model="dataForm.V_PAY_TYPE" placeholder="请选择" style="width: 100%;">
@@ -260,6 +263,9 @@ export default {
       dataFormRules: {
         V_PAY_NAME: [
           { required: true, message: "请输入账户名", trigger: "blur" }
+        ],
+        V_URL_SCHEME: [
+          { required: true, message: "请输入支付地址", trigger: "blur" }
         ]
       },
       // 新增编辑界面数据
@@ -268,7 +274,8 @@ export default {
         V_PAY_NAME: "",
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
-        V_FILE_ID: ""
+        V_FILE_ID: "",
+        V_URL_SCHEME: ""
       },
       // 新增编辑界面数据
       payConfForm: {
@@ -329,7 +336,8 @@ export default {
         V_PAY_NAME: "",
         V_PAY_TYPE: "01",
         V_IS_MATCH: "Y",
-        V_FILE_ID: ""
+        V_FILE_ID: "",
+        V_URL_SCHEME: ""
       };
     },
     handlePayConf: function(params) {
@@ -389,6 +397,7 @@ export default {
               .then(res => {
                 this.imageUrl = "";
                 this.dataForm.V_FILE_ID = "";
+                this.dataForm.V_URL_SCHEME = "";
                 this.editLoading = false;
                 if (res.success) {
                   this.$message({ message: "操作成功", type: "success" });
