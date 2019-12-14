@@ -26,3 +26,11 @@ export const audit = (data) => {
         data
     })
 }
+
+export const errorOrder = (data) => {
+    return axios({
+        url: '/order/errorOrder',
+        method: 'post',
+        data
+    })
+}
