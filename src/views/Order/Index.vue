@@ -123,7 +123,7 @@
             @click="orderBD(scope.row)"
             :loading="editLoading"
           />
-          <kt-button
+          <!-- <kt-button
             v-if="scope.row.V_STATUS =='2'"
             icon="fa fa-edit"
             label="错单重提"
@@ -132,7 +132,7 @@
             :size="size"
             @click="errorOrder(scope.row)"
             :loading="editLoading"
-          />
+          /> -->
           <kt-button
             v-if="scope.row.V_STATUS =='0'"
             icon="fa fa-edit"
