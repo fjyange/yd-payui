@@ -7,7 +7,6 @@
       :class="collapse?'menu-bar-collapse-width':'menu-bar-width'"
       @click="$router.push('/')"
     >
-      <img v-if="collapse" src="@/assets/logo.jpeg">
       <div>
         <img v-if="!collapse" src="@/assets/hhgj.png" class="big-img">
       </div>
