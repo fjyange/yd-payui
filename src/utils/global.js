@@ -5,7 +5,7 @@
  */
 
 // 后台管理系统服务器地址
-export const baseUrl = 'http://www.shurenpay.com//authorize'
+export const baseUrl = 'https://www.shurenpay.com//authorize'
 //  export const baseUrl = '/api/'
 // 系统数据备份还原服务器地址
 

@@ -208,7 +208,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://www.shurenpay.com/authorize/attach/fileUpload"
+            action="https://www.shurenpay.com/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -352,7 +352,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://www.shurenpay.com//authorize/attach/getFile?ID=" + id;
+      return "https://www.shurenpay.com//authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
