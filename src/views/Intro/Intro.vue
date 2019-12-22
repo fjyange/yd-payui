@@ -25,10 +25,28 @@
         <p>支付宝订单总额</p>
       </div>
     </el-card>
-    <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '2'">
+    <el-card class="box-card" v-if="showData.SHOW_USER_TYPE == '0'">
       <div class="box-content" style="width:93%">
+        <p>{{showData.ORDER_YS_MONEY}}</p>
+        <p>订单昨日总额</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.ORDER_YS_WX_MONEY}}</p>
+        <p>微信订单昨日总额</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.ORDER_YS_ALI_MONEY}}</p>
+        <p>支付宝订单昨日总额</p>
+      </div>
+    </el-card>
+    <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '2'">
+      <div class="box-content">
         <p>{{showData.COUNT_MONEY}}</p>
         <p>总收款</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.APP_YS_COUNT}}</p>
+        <p>昨日总收款</p>
       </div>
       <div class="box-content">
         <p>{{showData.WX_MONEY}}</p>
@@ -39,14 +57,18 @@
         <p>支付宝收款</p>
       </div>
     </el-card>
-     <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '1'">
-      <div class="box-content">
+    <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '1'">
+      <div class="box-content" style="width:93%">
         <p>{{showData.COUNT_MONEY}}</p>
         <p>总收款</p>
       </div>
       <div class="box-content">
         <p>{{showData.SURPLUS_BOND}}</p>
         <p>剩余保证金</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.V_YS_RECEIVABLES}}</p>
+        <p>昨日总收款</p>
       </div>
       <div class="box-content">
         <p>{{showData.WX_MONEY}}</p>
@@ -58,9 +80,13 @@
       </div>
     </el-card>
     <el-card class="box-card" v-if="showData.SHOW_USER_TYPE == '0'">
-      <div class="box-content" style="width:93%">
+      <div class="box-content">
         <p>{{showData.APP_TOTAL_COUNT}}</p>
         <p>平台总收款</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.APP_YS_COUNT}}</p>
+        <p>平台昨日总收款</p>
       </div>
       <div class="box-content">
         <p>{{showData.APP_CASH_COUNT}}</p>
@@ -72,9 +98,13 @@
       </div>
     </el-card>
     <el-card class="box-card" v-if="showData.SHOW_USER_TYPE == '0'">
-      <div class="box-content" style="width:93%">
+      <div class="box-content">
         <p>{{showData.USER_TOTAL_COUNT}}</p>
         <p>用户总收款</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.V_YS_RECEIVABLES}}</p>
+        <p>用户昨日总收款</p>
       </div>
       <div class="box-content">
         <p>{{showData.USER_TOTAL_SURPLUS}}</p>
@@ -83,6 +113,14 @@
       <div class="box-content">
         <p>{{showData.ACCOUNT_TOTAL_COUNT}}</p>
         <p>账户总收款</p>
+      </div>
+    </el-card>
+    <el-card class="box-card" v-if="showData.SYS_SHOW == 'Y'">
+      <div class="close" @click="operate('off')" v-if="showData.SYS_SWITCH == 'N'">
+        <span>关闭系统</span>
+      </div>
+      <div class="match" @click="operate('on')" v-else-if="showData.SYS_SWITCH == 'Y'">
+        <span>开启系统</span>
       </div>
     </el-card>
     <el-card class="box-card">
@@ -111,19 +149,11 @@
         <span>关闭匹配</span>
       </div>
     </el-card>
-    <el-card class="box-card" v-if="showData.SYS_SHOW == 'Y'">
-      <div class="close" @click="operate('off')" v-if="showData.SYS_SWITCH == 'N'">
-        <span>关闭系统</span>
-      </div>
-      <div class="match" @click="operate('on')" v-else-if="showData.SYS_SWITCH == 'Y'">
-        <span>开启系统</span>
-      </div>
-    </el-card>
-    <el-card class="box-card" v-if="showData.SYS_SHOW == 'Y'">
+    <!-- <el-card class="box-card" v-if="showData.SYS_SHOW == 'Y'">
       <div class="match" @click="editData()">
         <span>数据回正</span>
       </div>
-    </el-card>
+    </el-card>-->
   </div>
 </template>
 
@@ -136,7 +166,7 @@ export default {
     };
   },
   methods: {
-    editData:function(){
+    editData: function() {
       this.$confirm("确认数据回正么？", "提示", {}).then(() => {
         this.$api.send
           .dealErrorData()
@@ -192,7 +222,7 @@ export default {
       });
     },
     isMatch: function(msg) {
-      this.$confirm("确认"+msg+"匹配吗？", "提示", {}).then(() => {
+      this.$confirm("确认" + msg + "匹配吗？", "提示", {}).then(() => {
         this.$api.home
           .isMatch()
           .then(res => {
