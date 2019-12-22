@@ -92,6 +92,7 @@
     >
       <el-table-column header-align="center" align="center" prop="V_ORDER_NO" label="订单号"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_MONEY" label="订单金额"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_ACTUAL_PAY" label="到账金额" v-if="showRate"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_PAY_TYPE" label="支付方式">
         <template slot-scope="scope">
           <span v-if="scope.row.V_PAY_TYPE =='01'">支付宝</span>
@@ -186,6 +187,7 @@
 
 <script>
 import PopupTreeInput from "@/components/PopupTreeInput";
+import { hasPermission } from '@/permission/index.js'
 import KtTable from "@/views/Core/KtTable";
 import KtButton from "@/views/Core/KtButton";
 import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog";
@@ -199,6 +201,7 @@ export default {
   },
   data() {
     return {
+      showRate:false,
       loading: false,
       className: "",
       size: "small",
@@ -393,6 +396,9 @@ export default {
   },
   mounted() {
     this.findPage(false);
+    if (hasPermission('sys:order:rateshow')){
+      this.showRate = true
+    }
   }
 };
 </script>
