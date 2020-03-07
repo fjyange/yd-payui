@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       '/api/': {
         // target: 'http://localhost:8080/yunduanpay/authorize/',
-        target: 'http://47.106.143.80/authorize',
+        target: 'http://47.115.114.53/authorize',
         // target: 'http://120.79.91.63/authorize',
         // target: 'http://193.112.135.244/authorize/',
         // target: 'http://193.112.135.244:9090/authorize/',
