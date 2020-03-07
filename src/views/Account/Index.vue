@@ -136,7 +136,7 @@
       <el-pagination
         layout="total, prev, pager, next, jumper"
         @current-change="refreshPageRequest"
-        :current-page="pageResult.page"
+        :current-page="pageRequest.page"
         :page-size="pageResult.size"
         :total="pageResult.totalElements"
         style="float:right;"
@@ -178,7 +178,7 @@
     >
       <el-form
         :model="dataForm"
-        label-width="80px"
+        label-width="100px"
         :rules="dataFormRules"
         ref="dataForm"
         :size="size"
@@ -189,6 +189,9 @@
         </el-form-item>
         <el-form-item label="账户名" prop="V_PAY_NAME">
           <el-input v-model="dataForm.V_PAY_NAME" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="支付宝地址" prop="V_URL_SCHEME">
+          <el-input v-model="dataForm.V_URL_SCHEME" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="支付类型" prop="V_PAY_TYPE">
           <el-select v-model="dataForm.V_PAY_TYPE" placeholder="请选择" style="width: 100%;">
@@ -205,7 +208,11 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
+<<<<<<< HEAD
             action="http://47.115.114.53/authorize/attach/fileUpload"
+=======
+            action="http://47.113.110.43/authorize/attach/fileUpload"
+>>>>>>> shuren
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -260,6 +267,9 @@ export default {
       dataFormRules: {
         V_PAY_NAME: [
           { required: true, message: "请输入账户名", trigger: "blur" }
+        ],
+        V_URL_SCHEME: [
+          { required: true, message: "请输入支付地址", trigger: "blur" }
         ]
       },
       // 新增编辑界面数据
@@ -268,7 +278,8 @@ export default {
         V_PAY_NAME: "",
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
-        V_FILE_ID: ""
+        V_FILE_ID: "",
+        V_URL_SCHEME: ""
       },
       // 新增编辑界面数据
       payConfForm: {
@@ -329,7 +340,8 @@ export default {
         V_PAY_NAME: "",
         V_PAY_TYPE: "01",
         V_IS_MATCH: "Y",
-        V_FILE_ID: ""
+        V_FILE_ID: "",
+        V_URL_SCHEME: ""
       };
     },
     handlePayConf: function(params) {
@@ -344,7 +356,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://47.115.114.53/authorize/attach/getFile?ID=" + id;
+      return "http://47.115.114.43/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
@@ -388,6 +400,7 @@ export default {
               .then(res => {
                 this.imageUrl = "";
                 this.dataForm.V_FILE_ID = "";
+                this.dataForm.V_URL_SCHEME = "";
                 this.editLoading = false;
                 if (res.success) {
                   this.$message({ message: "操作成功", type: "success" });

@@ -107,7 +107,7 @@
           <span v-if="scope.row.V_STATUS =='3'">已补单</span>
           <span v-else-if="scope.row.V_STATUS =='1'">已确认</span>
           <span v-else-if="scope.row.V_STATUS =='2'">超时</span>
-          <span v-else-if="scope.row.V_STATUS =='4'">驳回</span>
+          <span v-else-if="scope.row.V_STATUS =='4'">错单</span>
           <span v-else>待确认</span>
         </template>
       </el-table-column>
@@ -125,6 +125,16 @@
             :loading="editLoading" 
             key="1"
           />
+          <!-- <kt-button
+            v-if="scope.row.V_STATUS =='2'"
+            icon="fa fa-edit"
+            label="错单重提"
+            type="danger"
+            perms="sys:order:error"
+            :size="size"
+            @click="errorOrder(scope.row)"
+            :loading="editLoading"
+          /> -->
           <kt-button
             v-if="scope.row.V_STATUS =='0'"
             icon="fa fa-edit"
@@ -144,12 +154,36 @@
       <el-pagination
         layout="total, prev, pager, next, jumper"
         @current-change="refreshPageRequest"
-        :current-page="pageResult.page"
+        :current-page="pageRequest.page"
         :page-size="pageResult.size"
         :total="pageResult.totalElements"
         style="float:right;"
       ></el-pagination>
     </div>
+    <el-dialog
+      title="错单重提"
+      width="40%"
+      :visible.sync="dialogError"
+      :close-on-click-modal="false"
+    >
+      <el-form :model="errorOrderForm" label-width="80px" :size="size" label-position="right">
+        <el-form-item label="ID" prop="ID" v-if="false">
+          <el-input v-model="errorOrderForm.ID" :disabled="true" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="支付金额" prop="V_PAY_TOTAL">
+          <el-input v-model="errorOrderForm.V_PAY_TOTAL" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button :size="size" @click.native="dialogError = false">{{$t('action.cancel')}}</el-button>
+        <el-button
+          :size="size"
+          type="primary"
+          @click.native="errorSubmit"
+          :loading="editLoading"
+        >{{$t('action.submit')}}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -200,10 +234,50 @@ export default {
       filterColumns: [],
       pageRequest: { page: 1, size: 10 },
       pageResult: {},
-      editLoading: false
+      editLoading: false,
+       // 新增编辑界面数据
+      errorOrderForm: {
+        ID: "",
+        V_MONEY: ""
+      },
+      dialogError : false
     };
   },
   methods: {
+    errorOrder:function(params){
+      this.dialogError = true;
+      this.errorOrderForm = Object.assign({}, params);
+    },
+    errorSubmit: function() {
+      this.$confirm("确认提交吗？", "提示", {}).then(() => {
+        this.editLoading = true;
+        let params = Object.assign({}, this.errorOrderForm);
+        this.$api.order
+          .errorOrder(params)
+          .then(res => {
+            this.errorOrderForm.ID = "";
+            this.errorOrderForm.V_MONEY = "";
+            this.editLoading = false;
+            if (res.success) {
+              this.$message({ message: "操作成功", type: "success" });
+              this.dialogError = false;
+            } else {
+              this.$message({
+                message: "操作失败, " + res.result,
+                type: "error"
+              });
+            }
+            this.findPage(null);
+          })
+          .catch(res => {
+            this.editLoading = false;
+            this.$message({
+              message: res.message,
+              type: "error"
+            });
+          });
+      });
+    },
     // 换页刷新
     refreshPageRequest: function(pageNum) {
       this.pageRequest.page = pageNum;
