@@ -8,7 +8,7 @@
       @click="$router.push('/')"
     >
       <div>
-        <img v-if="!collapse" src="@/assets/hhgj.png" class="big-img">
+        <img v-if="!collapse" src="@/assets/longteng.png" class="big-img">
       </div>
     </div>
     <!-- 导航菜单 -->

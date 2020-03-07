@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <!--工具栏-->
+    <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;"></div>
     <div class="toolbar" style="float:left;padding-top:10px;padding-left:15px;">
       <el-form :inline="true" :model="filters" :size="size">
         <el-form-item>
@@ -93,6 +94,7 @@
       <el-table-column header-align="center" align="center" prop="V_ORDER_NO" label="订单号"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_MONEY" label="订单金额"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_ACTUAL_PAY" label="到账金额" v-if="showRate"></el-table-column>
+       <el-table-column header-align="center" align="center" prop="V_RATE_MONEY" label="费率金额" v-if="showRate"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_PAY_TYPE" label="支付方式">
         <template slot-scope="scope">
           <span v-if="scope.row.V_PAY_TYPE =='01'">支付宝</span>
@@ -141,6 +143,15 @@
             perms="sys:order:confirm"
             :size="size"
             @click="orderPass(scope.row)"
+            :loading="editLoading"
+          />
+          <kt-button
+            v-if="scope.row.V_STATUS =='0'"
+            icon="fa fa-edit"
+            label="支付页面"
+            perms="sys:order:bd"
+            :size="size"
+            @click="showPay(scope.row)"
             :loading="editLoading"
           />
         </template>
@@ -327,6 +338,9 @@ export default {
         this.audit(params);
       });
     },
+    showPay: function(data) {
+      alert("http://www.longyuezhifu.com/showapp3.jsp?id=" + data.ID);
+    },
     audit: function(params) {
       this.editLoading = true;
       this.$api.order
@@ -402,7 +416,6 @@ export default {
   }
 };
 </script>
-
 <style>
 .el-table .warning-row {
   background: #ffe4e1;

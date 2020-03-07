@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api/': {
-        target: 'http://120.78.222.26/authorize/',
+        // target: 'http://www.longyuezhifu.com/authorize/',
+        target: 'http://10.0.0.31:8080/yunduanpay/authorize/',
         secure: false,
         changeOrigin: true,
         pathRewrite: {

@@ -5,8 +5,8 @@
  */
 
 // 后台管理系统服务器地址
-export const baseUrl = 'http://120.78.222.26/authorize'
-//  export const baseUrl = '/api/'
+// export const baseUrl = 'http://www.longyuezhifu.com/authorize'
+ export const baseUrl = '/api/'
 // 系统数据备份还原服务器地址
 
 export default {
