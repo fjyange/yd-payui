@@ -208,11 +208,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-<<<<<<< HEAD
-            action="http://47.115.114.53/authorize/attach/fileUpload"
-=======
-            action="http://47.113.110.43/authorize/attach/fileUpload"
->>>>>>> shuren
+            action="http://47.115.114.43/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
