@@ -72,13 +72,7 @@
     >
       <el-table-column header-align="center" align="center" prop="V_ORDER_NO" label="订单号"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_MONEY" label="订单金额"></el-table-column>
-      <el-table-column
-        header-align="center"
-        align="center"
-        prop="V_ACTUAL_PAY"
-        label="到账金额"
-        v-if="showRate"
-      ></el-table-column>
+      <!-- <el-table-column header-align="center" align="center"prop="V_ACTUAL_PAY" label="到账金额" v-if="showRate"></el-table-column> -->
       <el-table-column header-align="center" align="center" prop="V_PAY_TYPE" label="支付方式">
         <template slot-scope="scope">
           <span v-if="scope.row.V_PAY_TYPE =='01'">支付宝</span>

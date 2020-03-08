@@ -52,6 +52,7 @@
       :element-loading-text="$t('action.loading')"
     >
       <el-table-column header-align="center" align="center" prop="V_MONEY" label="提现金额"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_RATE" label="提现费率"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_FORMALITIES" label="手续费"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_REALITY" label="到账金额"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_APP_NAME" label="提现平台"></el-table-column>
@@ -130,6 +131,9 @@
         <el-form-item label="银行账号" prop="V_BANK_ACCOUNT">
           <el-input v-model="dataForm.V_BANK_ACCOUNT" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="费率" prop="V_RATE">
+          <el-input v-model="dataForm.V_RATE" auto-complete="off" :disabled="true"></el-input>
+        </el-form-item>
         <el-form-item label="实际到账金额" prop="V_REALITY">
           <el-input v-model="dataForm.V_REALITY" auto-complete="off" :disabled="true"></el-input>
         </el-form-item>
@@ -182,10 +186,11 @@ export default {
         ID: "",
         V_MONEY: 0,
         V_REALITY: 0,
+        V_RATE: "",
         V_FORMALITIES: "",
-        V_BANK_NAME: "",
-        V_BANK_USER: "",
-        V_BANK_ACCOUNT: ""
+        V_BANK_NAME:'',
+        V_BANK_USER:'',
+        V_BANK_ACCOUNT:''
       }
     };
   },
@@ -212,17 +217,15 @@ export default {
           this.pageResult = res.result;
           this.loading = false;
         })
-        .then(res => {});
+        .then(res=>{
+          
+        });
     },
-    exportCountData: function() {
-      window.open(this.global.baseUrl + "/export/todayCommisionExportCount");
+    exportCountData:function(){
+        window.open(this.global.baseUrl + "/export/todayCommisionExportCount")
     },
-    exportDetailData: function() {
-      window.open(
-        this.global.baseUrl +
-          "/export/todayCommisionExportDetail?V_APP_NAME=" +
-          this.filters.V_APP_NAME
-      );
+    exportDetailData:function(){
+        window.open(this.global.baseUrl + "/export/todayCommisionExportDetail?V_APP_NAME="+this.filters.V_APP_NAME);
     },
     // 显示新增界面
     handleAdd: function() {
@@ -232,14 +235,16 @@ export default {
         ID: "",
         V_MONEY: 0,
         V_REALITY: 0,
+        V_RATE: "",
         V_FORMALITIES: "",
-        V_BANK_NAME: "",
-        V_BANK_USER: "",
-        V_BANK_ACCOUNT: ""
+        V_BANK_NAME:'',
+        V_BANK_USER:'',
+        V_BANK_ACCOUNT:''
       };
       this.$api.commission
         .getRate()
         .then(res => {
+          this.dataForm.V_RATE = res.result.V_RATE;
           this.dataForm.V_FORMALITIES = res.result.V_FORMALITIES;
         })
         .then(data != null ? data.callback : "");
@@ -318,7 +323,9 @@ export default {
     },
     calcutMoney: function() {
       let money = this.dataForm.V_MONEY;
-      this.dataForm.V_REALITY = money - this.dataForm.V_FORMALITIES;
+      let rate = this.dataForm.V_RATE;
+      this.dataForm.V_REALITY =
+        money - money * rate - this.dataForm.V_FORMALITIES;
     }
   },
   mounted() {
