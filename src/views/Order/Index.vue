@@ -123,6 +123,7 @@
             :size="size"
             @click="orderBD(scope.row)"
             :loading="editLoading"
+            :key="1"
           />
           <!-- <kt-button
             v-if="scope.row.V_STATUS =='2'"
@@ -142,6 +143,7 @@
             :size="size"
             @click="orderPass(scope.row)"
             :loading="editLoading"
+            :key="2"
           />
         </template>
       </el-table-column>
