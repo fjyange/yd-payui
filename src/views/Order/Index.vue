@@ -112,7 +112,7 @@
           <span v-else>待确认</span>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" width="180" prop="V_STATUS" label="操作">
+      <el-table-column header-align="center" align="center" width="220" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
             v-if="scope.row.V_STATUS =='2'"
@@ -124,6 +124,16 @@
             @click="orderBD(scope.row)"
             :loading="editLoading"
             :key="1"
+          />
+          <kt-button
+            icon="fa fa-edit"
+            v-if="scope.row.V_STATUS =='2'"
+            label="打开支付"
+            perms="sys:order:bd"
+            :size="size"
+            @click="openUlr(scope.row)"
+            :loading="editLoading"
+            :key="3"
           />
           <!-- <kt-button
             v-if="scope.row.V_STATUS =='2'"
@@ -319,6 +329,15 @@ export default {
         };
         this.audit(params);
       });
+    },
+    openUlr:function(data) {
+        var url = "";
+        if(data.V_VIEW_TYPE == '1') {
+          url = "http://47.115.93.230/showapp2.jsp?id="+data.ID;
+        }else {
+          url = "http://47.115.93.230:8090/" + data.V_NAME;
+        }
+        window.open(url);
     },
     orderPass: function(data) {
       this.$confirm("是否进行确认订单么？", "提示", {}).then(() => {
