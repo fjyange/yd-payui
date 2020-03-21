@@ -128,6 +128,13 @@
             type="danger"
             @click="handleDelete(scope.row)"
           />
+          <kt-button
+            icon="fa fa-trash"
+            label="测试链接"
+            perms="sys:account:test"
+            :size="size"
+            @click="testUrl(scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -312,6 +319,9 @@ export default {
           this.loading = false;
         })
         .then(res => {});
+    },
+    testUrl:function(data) {
+      window.open("http://47.115.93.230/showPayPc2.jsp?id=" + data.ID);
     },
     // 批量删除
     handleDelete: function(data) {
