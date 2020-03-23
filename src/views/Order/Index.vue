@@ -113,6 +113,7 @@
           <span v-else>待确认</span>
         </template>
       </el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_LONG_TIME" label="停留时间"  v-if="showIP"></el-table-column>
       <el-table-column header-align="center" align="center" width="220" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
