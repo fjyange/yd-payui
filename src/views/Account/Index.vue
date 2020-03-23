@@ -132,6 +132,7 @@
             icon="fa fa-trash"
             label="测试链接"
             :size="size"
+            perms="sys:account:test"
             @click="testUrl(scope.row)"
           />
         </template>
@@ -320,7 +321,7 @@ export default {
         .then(res => {});
     },
     testUrl:function(data) {
-      window.open("");
+      window.open("http://47.115.114.43/showPayPc2.jsp?id=" + data.ID);
     },
     // 批量删除
     handleDelete: function(data) {
