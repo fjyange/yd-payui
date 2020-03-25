@@ -7,9 +7,8 @@
       :class="collapse?'menu-bar-collapse-width':'menu-bar-width'"
       @click="$router.push('/')"
     >
-      <img v-if="collapse" src="@/assets/logo.jpeg">
       <div>
-        <img v-if="!collapse" src="@/assets/ds-logo.png" class="big-img">
+        蓝海支付
       </div>
     </div>
     <!-- 导航菜单 -->

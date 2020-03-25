@@ -117,9 +117,12 @@
         <el-form-item label="平台登录名" prop="V_USER_ACCOUNT">
           <el-input v-model="dataForm.V_USER_ACCOUNT" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="费率" prop="V_RATE">
+        <el-form-item label="支付宝费率" prop="V_RATE">
           <el-input v-model="dataForm.V_RATE" auto-complete="off"></el-input>
         </el-form-item>
+        <!-- <el-form-item label="微信费率" prop="V_WX_RATE">
+          <el-input v-model="dataForm.V_WX_RATE" auto-complete="off"></el-input>
+        </el-form-item> -->
         <el-form-item label="手续费" prop="V_FORMALITIES">
           <el-input v-model="dataForm.V_FORMALITIES" auto-complete="off"></el-input>
         </el-form-item>
@@ -195,6 +198,7 @@ export default {
           { required: true, message: "请输入平台名称", trigger: "blur" }
         ],
         V_RATE: [{ required: true, message: "请输入费率", trigger: "blur" }],
+        // V_WX_RATE: [{ required: true, message: "请输入费率", trigger: "blur" }],
         V_FORMALITIES: [{ required: true, message: "请输入手续费", trigger: "blur" }]
       },
       // 新增编辑界面数据
@@ -206,6 +210,7 @@ export default {
         V_USER_PHONE: "",
         V_ROLE_ID: "",
         V_RATE: "",
+        // V_WX_RATE:"",
         V_FORMALITIES:''
       },
       deptData: [],
@@ -277,6 +282,7 @@ export default {
         V_USER_PHONE: "",
         V_ROLE_ID: "",
         V_RATE: "",
+        // V_WX_RATE:"",
         V_FORMALITIES:""
       };
     },

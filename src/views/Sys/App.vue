@@ -50,6 +50,9 @@
 			<el-form-item label="费率" prop="V_RATE" v-if="false">
 				<el-input v-model="dataForm.V_RATE" :disabled="true" auto-complete="off"></el-input>
 			</el-form-item>
+			<el-form-item label="微信费率" prop="V_WX_RATE" v-if="false">
+				<el-input v-model="dataForm.V_WX_RATE" :disabled="true" auto-complete="off"></el-input>
+			</el-form-item>
 			<el-form-item label="允许接入" prop="V_IS_MATCH" v-if="false">
 				<el-input v-model="dataForm.V_IS_MATCH" :disabled="true" auto-complete="off"></el-input>
 			</el-form-item>
@@ -114,6 +117,9 @@ export default {
 				],
 				V_RATE: [
 					{ required: true, message: '请输入费率', trigger: 'blur' }
+				],
+				V_WX_RATE: [
+					{ required: true, message: '请输入费率', trigger: 'blur' }
 				]
 			},
 			// 新增编辑界面数据
@@ -124,7 +130,8 @@ export default {
 				V_APP_NAME: '',
 				V_USER_PHONE:'',
 				V_ROLE_ID:'',
-				V_RATE:''
+				V_RATE:'',
+				V_WX_RATE:''
 			},
 			deptData: [],
 			deptTreeProps: {

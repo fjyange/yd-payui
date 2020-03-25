@@ -92,12 +92,14 @@
     >
       <el-table-column header-align="center" align="center" prop="V_ORDER_NO" label="订单号"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_MONEY" label="订单金额"></el-table-column>
+      <!-- <el-table-column header-align="center" align="center" prop="V_ACTUAL_PAY" label="到账金额" v-if="showRate"></el-table-column> -->
       <el-table-column header-align="center" align="center" prop="V_PAY_TYPE" label="支付方式">
         <template slot-scope="scope">
           <span v-if="scope.row.V_PAY_TYPE =='01'">支付宝</span>
           <span v-else-if="scope.row.V_PAY_TYPE =='02'">微信</span>
         </template>
       </el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_REQUEST_IP" label="登录ip"  v-if="showIP"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_APP_NAME" label="所属平台"></el-table-column>
       <el-table-column header-align="center" align="center" prop="USER_NAME" label="所属用户"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_PAY_NAME" label="支付账户"></el-table-column>
@@ -111,7 +113,8 @@
           <span v-else>待确认</span>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" width="180" prop="V_STATUS" label="操作">
+      <el-table-column header-align="center" align="center" prop="V_LONG_TIME" label="停留时间"  v-if="showIP"></el-table-column>
+      <el-table-column header-align="center" align="center" width="220" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
             v-if="scope.row.V_STATUS =='2'"
@@ -122,6 +125,17 @@
             :size="size"
             @click="orderBD(scope.row)"
             :loading="editLoading"
+            :key="1"
+          />
+          <kt-button
+            icon="fa fa-edit"
+            v-if="scope.row.V_STATUS =='2'"
+            label="打开支付"
+            perms="sys:order:bd"
+            :size="size"
+            @click="openUlr(scope.row)"
+            :loading="editLoading"
+            :key="3"
           />
           <!-- <kt-button
             v-if="scope.row.V_STATUS =='2'"
@@ -141,6 +155,7 @@
             :size="size"
             @click="orderPass(scope.row)"
             :loading="editLoading"
+            :key="2"
           />
         </template>
       </el-table-column>
@@ -186,6 +201,7 @@
 
 <script>
 import PopupTreeInput from "@/components/PopupTreeInput";
+import { hasPermission } from '@/permission/index.js'
 import KtTable from "@/views/Core/KtTable";
 import KtButton from "@/views/Core/KtButton";
 import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog";
@@ -199,6 +215,8 @@ export default {
   },
   data() {
     return {
+      showRate:false,
+      showIP:false,
       loading: false,
       className: "",
       size: "small",
@@ -315,6 +333,15 @@ export default {
         this.audit(params);
       });
     },
+    openUlr:function(data) {
+        var url = "";
+        if(data.V_VIEW_TYPE == '1') {
+          url = "http://120.24.29.128/showapp2.jsp?id="+data.ID;
+        }else {
+          url = "http://120.24.29.128:8090/" + data.V_NAME;
+        }
+        window.open(url);
+    },
     orderPass: function(data) {
       this.$confirm("是否进行确认订单么？", "提示", {}).then(() => {
         let params = {
@@ -393,6 +420,12 @@ export default {
   },
   mounted() {
     this.findPage(false);
+    if (hasPermission('sys:order:rateshow')){
+      this.showRate = true
+    }
+    if (hasPermission('sys:order:bd')){
+      this.showIP = true
+    }
   }
 };
 </script>

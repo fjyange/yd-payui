@@ -65,7 +65,7 @@
           <span v-else-if="scope.row.V_PAY_TYPE == '02'">微信</span>
         </template>
       </el-table-column>
-      <el-table-column prop="V_FILEID" label="图片" width="120">
+      <!-- <el-table-column prop="V_FILEID" label="图片" width="120">
         <template slot-scope="scope">
           <el-popover placement="left" title trigger="hover" width="300">
             <img :src="getFileUrl(scope.row.V_FILEID)" width="300" height="300">
@@ -76,7 +76,7 @@
             >
           </el-popover>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column prop="V_IS_MATCH" label="是否匹配" width="120">
         <template slot-scope="scope">
           <el-switch
@@ -127,6 +127,13 @@
             :size="size"
             type="danger"
             @click="handleDelete(scope.row)"
+          />
+          <kt-button
+            icon="fa fa-trash"
+            label="测试链接"
+            perms="sys:account:test"
+            :size="size"
+            @click="testUrl(scope.row)"
           />
         </template>
       </el-table-column>
@@ -190,8 +197,11 @@
         <el-form-item label="账户名" prop="V_PAY_NAME">
           <el-input v-model="dataForm.V_PAY_NAME" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="支付宝地址" prop="V_URL_SCHEME">
+        <el-form-item label="图片url" prop="V_URL_SCHEME">
           <el-input v-model="dataForm.V_URL_SCHEME" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="appid" prop="V_APP_ID">
+          <el-input v-model="dataForm.V_APP_ID" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="支付类型" prop="V_PAY_TYPE">
           <el-select v-model="dataForm.V_PAY_TYPE" placeholder="请选择" style="width: 100%;">
@@ -272,6 +282,7 @@ export default {
       dataForm: {
         ID: "",
         V_PAY_NAME: "",
+        V_APP_ID: "",
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
         V_FILE_ID: "",
@@ -309,6 +320,9 @@ export default {
         })
         .then(res => {});
     },
+    testUrl:function(data) {
+      window.open("http://120.24.29.128/showPayPc2.jsp?id=" + data.ID);
+    },
     // 批量删除
     handleDelete: function(data) {
       this.$confirm("确认删除吗？", "提示", {}).then(() => {
@@ -334,6 +348,7 @@ export default {
       this.dataForm = {
         ID: "",
         V_PAY_NAME: "",
+        V_APP_ID: "",
         V_PAY_TYPE: "01",
         V_IS_MATCH: "Y",
         V_FILE_ID: "",
@@ -397,6 +412,7 @@ export default {
                 this.imageUrl = "";
                 this.dataForm.V_FILE_ID = "";
                 this.dataForm.V_URL_SCHEME = "";
+                this.dataForm.V_APP_ID = "";
                 this.editLoading = false;
                 if (res.success) {
                   this.$message({ message: "操作成功", type: "success" });
