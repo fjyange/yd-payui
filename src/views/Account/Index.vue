@@ -218,7 +218,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://47.115.114.43/authorize/attach/fileUpload"
+            action="http://8.129.170.244/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -321,7 +321,7 @@ export default {
         .then(res => {});
     },
     testUrl:function(data) {
-      window.open("http://47.115.114.43/showPayPc2.jsp?id=" + data.ID);
+      window.open("http://8.129.170.244/showPayPc2.jsp?id=" + data.ID);
     },
     // 批量删除
     handleDelete: function(data) {
@@ -367,7 +367,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://47.115.114.43/authorize/attach/getFile?ID=" + id;
+      return "http://8.129.170.244/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {

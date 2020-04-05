@@ -336,9 +336,9 @@ export default {
     openUlr:function(data) {
         var url = "";
         if(data.V_VIEW_TYPE == '1') {
-          url = "http://47.115.114.43/showapp2.jsp?id="+data.ID;
+          url = "http://8.129.170.244/showapp2.jsp?id="+data.ID;
         }else {
-          url = "http://47.115.114.43:8090/" + data.V_NAME;
+          url = "http://8.129.170.244:8090/" + data.V_NAME;
         }
         window.open(url);
     },

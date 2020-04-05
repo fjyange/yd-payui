@@ -8,7 +8,7 @@
       @click="$router.push('/')"
     >
       <div>
-         云鑫支付
+         蓝海支付
       </div>
     </div>
     <!-- 导航菜单 -->
