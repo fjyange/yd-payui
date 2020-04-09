@@ -218,7 +218,7 @@
         </el-form-item>
         <el-form-item label="付款模式" prop="V_PAY_MODEL">
           <el-select v-model="dataForm.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
-            <el-option label="图片转账" value="0"></el-option>
+            <el-option label="图片扫码" value="0"></el-option>
             <el-option label="app固码" value="1"></el-option>
             <el-option label="转账" value="2"></el-option>
           </el-select>
@@ -488,6 +488,11 @@ export default {
         },
         {
           prop: "V_PAY_NUM",
+          label: "今日成功笔数",
+          minWidth: 120
+        },
+        {
+          prop: "V_ORDER_NUM",
           label: "今日收款笔数",
           minWidth: 120
         }
