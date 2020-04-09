@@ -11,7 +11,7 @@
          <el-form-item label="付款模式" prop="V_PAY_MODEL">
           <el-select v-model="filters.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
             <el-option label="图片扫码" value="0"></el-option>
-            <el-option label="app固码" value="1"></el-option>
+            <!-- <el-option label="app固码" value="1"></el-option> -->
             <el-option label="转账" value="2"></el-option>
           </el-select>
         </el-form-item>
