@@ -8,6 +8,13 @@
           <el-form-item>
             <el-input v-model="filters.USER_NAME" placeholder="用户名"></el-input>
           </el-form-item>
+         <el-form-item label="付款模式" prop="V_PAY_MODEL">
+          <el-select v-model="filters.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
+            <el-option label="图片转账" value="0"></el-option>
+            <el-option label="app固码" value="1"></el-option>
+            <el-option label="转账" value="2"></el-option>
+          </el-select>
+        </el-form-item>
           <el-form-item>
             <kt-button
               icon="fa fa-search"
@@ -209,6 +216,13 @@
             <el-option label="微信" value="02"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="付款模式" prop="V_PAY_MODEL">
+          <el-select v-model="dataForm.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
+            <el-option label="图片转账" value="0"></el-option>
+            <el-option label="app固码" value="1"></el-option>
+            <el-option label="转账" value="2"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="是否匹配" prop="V_IS_MATCH">
           <el-select v-model="dataForm.V_IS_MATCH" placeholder="请选择" style="width: 100%;">
             <el-option label="是" value="Y"></el-option>
@@ -286,7 +300,8 @@ export default {
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
         V_FILE_ID: "",
-        V_URL_SCHEME: ""
+        V_URL_SCHEME: "",
+        V_PAY_MODEL:"0"
       },
       // 新增编辑界面数据
       payConfForm: {
@@ -321,7 +336,13 @@ export default {
         .then(res => {});
     },
     testUrl:function(data) {
-      window.open("http://47.115.114.43/showPayPc2.jsp?id=" + data.ID);
+      if(data.V_PAY_MODEL == '1') {
+        window.open("http://47.115.114.43/showAccount.jsp?id=" + data.V_APP_ID);
+      } else if(data.V_PAY_MODEL == '2') {
+        window.open("http://47.115.114.43/showPayPc2.jsp?id=" + data.ID);
+      } else {
+        alert("图片转账无法测试")
+      }
     },
     // 批量删除
     handleDelete: function(data) {
@@ -352,7 +373,8 @@ export default {
         V_PAY_TYPE: "01",
         V_IS_MATCH: "Y",
         V_FILE_ID: "",
-        V_URL_SCHEME: ""
+        V_URL_SCHEME: "",
+        V_PAY_MODEL:"0"
       };
     },
     handlePayConf: function(params) {

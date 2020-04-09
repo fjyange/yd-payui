@@ -351,6 +351,7 @@ export default {
         { prop: "V_APPID", label: "平台接入id", minWidth: 120 },
         { prop: "V_SECRET", label: "平台接入秘钥", minWidth: 180 },
         { prop: "V_APP_NAME", label: "平台名称", minWidth: 120 },
+        { prop:"V_SUCCESS_RATE", label:"成功率", minWidth:120},
         { prop: "V_WX_COLLECTION", label: "微信收款", minWidth: 120 },
         { prop: "V_ALI_COLLECTION", label: "支付宝收款", minWidth: 120 },
         { prop: "V_TOTAL_COLLECTION", label: "总收款", minWidth: 120 },

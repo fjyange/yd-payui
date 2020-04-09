@@ -13,6 +13,9 @@
           <el-input v-model="filters.V_ORDER_NO" placeholder="订单号"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-input v-model="filters.V_REQUEST_IP" placeholder="订单ip"></el-input>
+        </el-form-item>
+        <el-form-item>
           <el-time-picker
             is-range
             v-model="filters.SEARCH_TIME"
@@ -243,7 +246,8 @@ export default {
         V_APP_NAME: "",
         V_ORDER_NO: "",
         SEARCH_TIME: "",
-        V_STATUS: ""
+        V_STATUS: "",
+        V_REQUEST_IP:""
       },
       columns: [],
       filterColumns: [],
