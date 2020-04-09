@@ -8,6 +8,14 @@ export const findPage = (data) => {
     })
 }
 
+export const onlineAccount = (data) => {
+    return axios({
+        url: '/account/onlineAccount',
+        method: 'post',
+        data
+    })
+}
+
 /* 
  * 用户管理模块
  */
