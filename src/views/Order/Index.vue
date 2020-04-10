@@ -102,7 +102,7 @@
           <span v-else-if="scope.row.V_PAY_TYPE =='02'">微信</span>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" prop="V_REQUEST_IP" label="登录ip"  v-if="showIP"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_REQUEST_IP" label="登录ip"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_APP_NAME" label="所属平台"></el-table-column>
       <el-table-column header-align="center" align="center" prop="USER_NAME" label="所属用户"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_PAY_NAME" label="支付账户"></el-table-column>
@@ -116,7 +116,7 @@
           <span v-else>待确认</span>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" prop="V_LONG_TIME" label="停留时间"  v-if="showIP"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_LONG_TIME" label="停留时间"></el-table-column>
       <el-table-column header-align="center" align="center" width="220" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
@@ -340,9 +340,9 @@ export default {
     openUlr:function(data) {
         var url = "";
         if(data.V_VIEW_TYPE == '1') {
-          url = "http://47.115.114.43/showapp2.jsp?id="+data.ID;
-        }else {
           url = "http://47.115.114.43:8090/" + data.V_NAME;
+        }else {
+          url = "http://47.115.114.43/showapp2.jsp?id="+data.ID;
         }
         window.open(url);
     },
@@ -426,9 +426,6 @@ export default {
     this.findPage(false);
     if (hasPermission('sys:order:rateshow')){
       this.showRate = true
-    }
-    if (hasPermission('sys:order:bd')){
-      this.showIP = true
     }
   }
 };
