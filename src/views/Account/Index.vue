@@ -204,6 +204,12 @@
         <el-form-item label="账户名" prop="V_PAY_NAME">
           <el-input v-model="dataForm.V_PAY_NAME" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="账号" prop="V_PAY_ACCOUNT">
+          <el-input v-model="dataForm.V_PAY_ACCOUNT" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="收款名" prop="V_PAY_NO">
+          <el-input v-model="dataForm.V_PAY_NO" auto-complete="off"></el-input>
+        </el-form-item>
         <el-form-item label="图片url" prop="V_URL_SCHEME">
           <el-input v-model="dataForm.V_URL_SCHEME" auto-complete="off"></el-input>
         </el-form-item>
@@ -232,7 +238,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://47.115.114.43/authorize/attach/fileUpload"
+            action="http://45.248.70.171/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -288,6 +294,12 @@ export default {
         V_PAY_NAME: [
           { required: true, message: "请输入账户名", trigger: "blur" }
         ],
+        V_PAY_ACCOUNT: [
+          { required: true, message: "请输入账号", trigger: "blur" }
+        ],
+        V_PAY_NO: [
+          { required: true, message: "请输入收款名", trigger: "blur" }
+        ],
         V_URL_SCHEME: [
           { required: true, message: "请输入支付地址", trigger: "blur" }
         ]
@@ -296,6 +308,8 @@ export default {
       dataForm: {
         ID: "",
         V_PAY_NAME: "",
+        V_PAY_ACCOUNT: "",
+        V_PAY_NO: "",
         V_APP_ID: "",
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
@@ -337,9 +351,9 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://47.115.114.43/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("http://45.248.70.171/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://47.115.114.43/showPayPc2.jsp?id=" + data.ID);
+        window.open("http://45.248.70.171/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
@@ -369,6 +383,8 @@ export default {
       this.dataForm = {
         ID: "",
         V_PAY_NAME: "",
+        V_PAY_ACCOUNT: "",
+        V_PAY_NO: "",
         V_APP_ID: "",
         V_PAY_TYPE: "01",
         V_IS_MATCH: "Y",
@@ -389,7 +405,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://47.115.114.43/authorize/attach/getFile?ID=" + id;
+      return "http://45.248.70.171/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
