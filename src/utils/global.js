@@ -5,7 +5,7 @@
  */
 
 // 后台管理系统服务器地址
-export const baseUrl = 'http://8.129.170.244/authorize'
+export const baseUrl = 'http://47.57.81.247/authorize'
 //  export const baseUrl = '/api/'
 // 系统数据备份还原服务器地址
 

@@ -340,9 +340,9 @@ export default {
     openUlr:function(data) {
         var url = "";
         if(data.V_VIEW_TYPE == '0') {
-          url = "http://8.129.170.244:8090/" + data.V_NAME;
+          url = "http://47.57.81.247:8090/" + data.V_NAME;
         }else {
-          url = "http://8.129.170.244/showapp2.jsp?id="+data.ID;
+          url = "http://47.57.81.247/showapp2.jsp?id="+data.ID;
         }
         window.open(url);
     },

@@ -8,12 +8,6 @@
           <el-form-item>
             <el-input v-model="filters.USER_NAME" placeholder="用户名"></el-input>
           </el-form-item>
-         <el-form-item label="付款模式" prop="V_PAY_MODEL">
-          <el-select v-model="filters.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
-            <el-option label="图片扫码" value="0"></el-option>
-            <!-- <el-option label="app固码" value="1"></el-option> -->
-            <el-option label="转账" value="2"></el-option>
-          </el-select>
         </el-form-item>
           <el-form-item>
             <kt-button
@@ -224,7 +218,7 @@
         </el-form-item>
         <el-form-item label="付款模式" prop="V_PAY_MODEL">
           <el-select v-model="dataForm.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
-            <el-option label="图片扫码" value="0"></el-option>
+            <!-- <el-option label="图片扫码" value="0"></el-option> -->
             <!-- <el-option label="app固码" value="1"></el-option> -->
             <el-option label="转账" value="2"></el-option>
           </el-select>
@@ -235,10 +229,10 @@
             <el-option label="否" value="N"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="图片上传" prop="V_FILE_ID">
+        <!-- <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://8.129.170.244/authorize/attach/fileUpload"
+            action="http://47.57.81.247/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -246,7 +240,7 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
@@ -315,7 +309,7 @@ export default {
         V_IS_MATCH: "",
         V_FILE_ID: "",
         V_URL_SCHEME: "",
-        V_PAY_MODEL:"0"
+        V_PAY_MODEL:"2"
       },
       // 新增编辑界面数据
       payConfForm: {
@@ -351,9 +345,9 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://8.129.170.244/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("http://47.57.81.247/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://8.129.170.244/showPayPc2.jsp?id=" + data.ID);
+        window.open("http://47.57.81.247/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
@@ -390,7 +384,7 @@ export default {
         V_IS_MATCH: "Y",
         V_FILE_ID: "",
         V_URL_SCHEME: "",
-        V_PAY_MODEL:"0"
+        V_PAY_MODEL:"2"
       };
     },
     handlePayConf: function(params) {
@@ -405,7 +399,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://8.129.170.244/authorize/attach/getFile?ID=" + id;
+      return "http://47.57.81.247/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
