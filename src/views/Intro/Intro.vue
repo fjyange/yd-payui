@@ -56,6 +56,14 @@
         <p>{{showData.ALI_MONEY}}</p>
         <p>支付宝收款</p>
       </div>
+      <div class="box-content">
+        <p>{{showData.V_CASH_COLLECTION}}</p>
+        <p>可提现余额</p>
+      </div>
+      <div class="box-content">
+        <p>{{showData.V_RATE_COLLECTION}}</p>
+        <p>预扣提现余额</p>
+      </div>
     </el-card>
     <el-card class="box-card" v-else-if="showData.SHOW_USER_TYPE == '1'">
       <div class="box-content" style="width:93%">
