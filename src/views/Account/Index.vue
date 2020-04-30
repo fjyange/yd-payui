@@ -345,9 +345,9 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://47.57.81.247/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("https://www.showenr.com/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://47.57.81.247/showPayPc2.jsp?id=" + data.ID);
+        window.open("https://www.showenr.com/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
