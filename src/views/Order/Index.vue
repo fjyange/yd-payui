@@ -117,6 +117,13 @@
         </template>
       </el-table-column>
       <el-table-column header-align="center" align="center" prop="V_LONG_TIME" label="停留时间"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_TYPE" label="跳转类型">
+        <template slot-scope="scope">
+          <span v-if="scope.row.V_TYPE =='2'">淘宝</span>
+          <span v-else-if="scope.row.V_TYPE =='1'">支付宝</span>
+          <span v-else>无</span>
+        </template>
+      </el-table-column>
       <el-table-column header-align="center" align="center" width="220" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
