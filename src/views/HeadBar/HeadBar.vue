@@ -119,7 +119,7 @@ export default {
     }
   },
   mounted() {
-    this.sysName = " 云鑫支付";
+    this.sysName = " 白云支付";
     var user = sessionStorage.getItem("user");
     if (user) {
       this.user.name = user;
