@@ -353,7 +353,7 @@ export default {
       if(data.V_PAY_MODEL == '1') {
         window.open("http://8.129.183.175/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://www.hanayiqi.com/showPayPc2.jsp?id=" + data.ID);
+        window.open("http://8.129.183.175/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
