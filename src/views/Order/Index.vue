@@ -347,7 +347,7 @@ export default {
     openUlr:function(data) {
         var url = "";
         if(data.V_VIEW_TYPE == '1') {
-          url = "http://47.56.194.247:8090/" + data.V_NAME;
+          url = "http://www.hanayiqi.com:8090/" + data.V_NAME;
         }else {
           url = "http://www.hanayiqi.com/showapp2.jsp?id="+data.ID;
         }

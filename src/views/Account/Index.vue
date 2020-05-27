@@ -351,7 +351,7 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://47.56.194.247/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("http://www.hanayiqi.com/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
         window.open("http://www.hanayiqi.com/showPayPc2.jsp?id=" + data.ID);
       } else {
@@ -405,7 +405,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://47.56.194.247/authorize/attach/getFile?ID=" + id;
+      return "http://www.hanayiqi.com/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
