@@ -235,7 +235,7 @@
             <el-option label="否" value="N"></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item label="图片上传" prop="V_FILE_ID">
+        <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
             action="http://8.129.183.175/authorize/attach/fileUpload"
@@ -246,7 +246,7 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-        </el-form-item> -->
+        </el-form-item> 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
