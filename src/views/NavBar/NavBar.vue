@@ -8,7 +8,7 @@
       @click="$router.push('/')"
     >
       <div>
-         白云支付
+         鑫发论坛
       </div>
     </div>
     <!-- 导航菜单 -->

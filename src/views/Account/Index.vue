@@ -238,7 +238,7 @@
         <el-form-item label="图片上传" prop="V_FILE_ID">
           <el-upload
             class="avatar-uploader"
-            action="http://8.129.183.175/authorize/attach/fileUpload"
+            action="http://120.25.250.167/authorize/attach/fileUpload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -351,9 +351,9 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://8.129.183.175/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("http://120.25.250.167/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://8.129.183.175/showPayPc2.jsp?id=" + data.ID);
+        window.open("http://120.25.250.167/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
@@ -405,7 +405,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://8.129.183.175/authorize/attach/getFile?ID=" + id;
+      return "http://120.25.250.167/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {

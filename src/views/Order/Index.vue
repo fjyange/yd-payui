@@ -347,9 +347,9 @@ export default {
     openUlr:function(data) {
         var url = "";
         if(data.V_VIEW_TYPE == '1') {
-          url = "http://8.129.183.175:8090/" + data.V_NAME;
+          url = "http://120.25.250.167:8090/" + data.V_NAME;
         }else {
-          url = "http://8.129.183.175/showapp2.jsp?id="+data.ID;
+          url = "http://120.25.250.167/showapp2.jsp?id="+data.ID;
         }
         window.open(url);
     },
