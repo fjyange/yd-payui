@@ -127,7 +127,7 @@
       <el-table-column header-align="center" align="center" width="220" prop="V_STATUS" label="操作">
         <template slot-scope="scope">
           <kt-button
-            v-if="scope.row.V_STATUS =='2'"
+            v-if="scope.row.V_STATUS =='2' || scope.row.V_STATUS =='4'"
             icon="fa fa-edit"
             label="补单"
             type="danger"
@@ -147,7 +147,7 @@
             :loading="editLoading"
             :key="3"
           />
-          <!-- <kt-button
+          <kt-button
             v-if="scope.row.V_STATUS =='2'"
             icon="fa fa-edit"
             label="错单重提"
@@ -156,7 +156,7 @@
             :size="size"
             @click="errorOrder(scope.row)"
             :loading="editLoading"
-          /> -->
+          />
           <kt-button
             v-if="scope.row.V_STATUS =='0'"
             icon="fa fa-edit"
@@ -182,18 +182,16 @@
         style="float:right;"
       ></el-pagination>
     </div>
-    <el-dialog
-      title="错单重提"
-      width="40%"
-      :visible.sync="dialogError"
-      :close-on-click-modal="false"
-    >
+    <el-dialog title="错单重提" width="40%" :visible.sync="dialogError" :close-on-click-modal="false">
       <el-form :model="errorOrderForm" label-width="80px" :size="size" label-position="right">
         <el-form-item label="ID" prop="ID" v-if="false">
           <el-input v-model="errorOrderForm.ID" :disabled="true" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="支付金额" prop="V_PAY_TOTAL">
           <el-input v-model="errorOrderForm.V_PAY_TOTAL" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="验证秘钥" prop="V_KEY">
+          <el-input v-model="errorOrderForm.V_KEY" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -211,7 +209,7 @@
 
 <script>
 import PopupTreeInput from "@/components/PopupTreeInput";
-import { hasPermission } from '@/permission/index.js'
+import { hasPermission } from "@/permission/index.js";
 import KtTable from "@/views/Core/KtTable";
 import KtButton from "@/views/Core/KtButton";
 import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog";
@@ -225,8 +223,8 @@ export default {
   },
   data() {
     return {
-      showRate:false,
-      showIP:false,
+      showRate: false,
+      showIP: false,
       loading: false,
       className: "",
       size: "small",
@@ -254,25 +252,28 @@ export default {
         V_ORDER_NO: "",
         SEARCH_TIME: "",
         V_STATUS: "",
-        V_REQUEST_IP:""
+        V_REQUEST_IP: ""
       },
       columns: [],
       filterColumns: [],
       pageRequest: { page: 1, size: 10 },
       pageResult: {},
       editLoading: false,
-       // 新增编辑界面数据
+      // 新增编辑界面数据
       errorOrderForm: {
         ID: "",
-        V_MONEY: ""
+        V_MONEY: "",
+        V_KEY: ""
       },
-      dialogError : false
+      dialogError: false
     };
   },
   methods: {
-    errorOrder:function(params){
+    errorOrder: function(params) {
       this.dialogError = true;
+      debugger;
       this.errorOrderForm = Object.assign({}, params);
+      alert(this.errorOrderForm);
     },
     errorSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
@@ -281,10 +282,11 @@ export default {
         this.$api.order
           .errorOrder(params)
           .then(res => {
-            this.errorOrderForm.ID = "";
-            this.errorOrderForm.V_MONEY = "";
             this.editLoading = false;
             if (res.success) {
+              this.errorOrderForm.ID = "";
+              this.errorOrderForm.V_MONEY = "";
+              this.errorOrderForm.V_KEY = "";
               this.$message({ message: "操作成功", type: "success" });
               this.dialogError = false;
             } else {
@@ -344,14 +346,14 @@ export default {
         this.audit(params);
       });
     },
-    openUlr:function(data) {
-        var url = "";
-        if(data.V_VIEW_TYPE == '1') {
-          url = "http://120.25.250.167:8090/" + data.V_NAME;
-        }else {
-          url = "http://120.25.250.167/showapp2.jsp?id="+data.ID;
-        }
-        window.open(url);
+    openUlr: function(data) {
+      var url = "";
+      if (data.V_VIEW_TYPE == "1") {
+        url = "http://120.25.250.167:8090/" + data.V_NAME;
+      } else {
+        url = "http://120.25.250.167/showapp2.jsp?id=" + data.ID;
+      }
+      window.open(url);
     },
     orderPass: function(data) {
       this.$confirm("是否进行确认订单么？", "提示", {}).then(() => {
@@ -431,8 +433,8 @@ export default {
   },
   mounted() {
     this.findPage(false);
-    if (hasPermission('sys:order:rateshow')){
-      this.showRate = true
+    if (hasPermission("sys:order:rateshow")) {
+      this.showRate = true;
     }
   }
 };
