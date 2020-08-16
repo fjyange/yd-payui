@@ -119,7 +119,7 @@ export default {
     }
   },
   mounted() {
-    this.sysName = " 鑫发论坛";
+    this.sysName = " 大發论坛";
     var user = sessionStorage.getItem("user");
     if (user) {
       this.user.name = user;

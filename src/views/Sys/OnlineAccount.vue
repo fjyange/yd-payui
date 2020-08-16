@@ -145,7 +145,7 @@ export default {
           minWidth: 120
         },
         {
-          prop: "V_PAY_NAME",
+          prop: "V_BANK_NAME",
           label: "账户名",
           minWidth: 120
         },

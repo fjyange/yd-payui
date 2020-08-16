@@ -1,6 +1,6 @@
 export default {
     state: {
-        appName: " 鑫发论坛",  // 应用名称
+        appName: " 大發论坛",  // 应用名称
         themeColor: "#14889A",  // 主题颜色
         oldThemeColor: "#14889A",   // 上一次主题颜色
         collapse:false,  // 导航栏收缩状态

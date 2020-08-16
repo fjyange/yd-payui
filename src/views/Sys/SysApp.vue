@@ -117,7 +117,7 @@
         <el-form-item label="平台登录名" prop="V_USER_ACCOUNT">
           <el-input v-model="dataForm.V_USER_ACCOUNT" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="支付宝费率" prop="V_RATE">
+        <el-form-item label="费率" prop="V_RATE">
           <el-input v-model="dataForm.V_RATE" auto-complete="off"></el-input>
         </el-form-item>
         <!-- <el-form-item label="微信费率" prop="V_WX_RATE">

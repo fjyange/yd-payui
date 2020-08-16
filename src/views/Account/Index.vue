@@ -70,6 +70,7 @@
         <template slot-scope="scope">
           <span v-if="scope.row.V_PAY_TYPE == '01'">支付宝</span>
           <span v-else-if="scope.row.V_PAY_TYPE == '02'">微信</span>
+          <span v-else-if="scope.row.V_PAY_TYPE == '03'">银行卡</span>
         </template>
       </el-table-column>
       <!-- <el-table-column prop="V_FILEID" label="图片" width="120">
@@ -192,7 +193,7 @@
     >
       <el-form
         :model="dataForm"
-        label-width="100px"
+        label-width="120px"
         :rules="dataFormRules"
         ref="dataForm"
         :size="size"
@@ -201,32 +202,22 @@
         <el-form-item label="ID" prop="ID" v-if="false">
           <el-input v-model="dataForm.ID" :disabled="true" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="账户名" prop="V_PAY_NAME">
-          <el-input v-model="dataForm.V_PAY_NAME" auto-complete="off"></el-input>
+        <el-form-item label="银行开户名" prop="V_BANK_NAME">
+          <el-input v-model="dataForm.V_BANK_NAME" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="账号" prop="V_PAY_ACCOUNT">
-          <el-input v-model="dataForm.V_PAY_ACCOUNT" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="收款名" prop="V_PAY_NO">
-          <el-input v-model="dataForm.V_PAY_NO" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="图片url" prop="V_URL_SCHEME">
-          <el-input v-model="dataForm.V_URL_SCHEME" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="appid" prop="V_APP_ID">
-          <el-input v-model="dataForm.V_APP_ID" auto-complete="off"></el-input>
+        <el-form-item label="银行开户账号" prop="V_BANK_ACCOUNT">
+          <el-input v-model="dataForm.V_BANK_ACCOUNT" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="支付类型" prop="V_PAY_TYPE">
           <el-select v-model="dataForm.V_PAY_TYPE" placeholder="请选择" style="width: 100%;">
-            <el-option label="支付宝" value="01"></el-option>
-            <el-option label="微信" value="02"></el-option>
+            <el-option label="银行卡" value="03"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="付款模式" prop="V_PAY_MODEL">
           <el-select v-model="dataForm.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
             <!-- <el-option label="图片扫码" value="0"></el-option>
             <el-option label="app固码" value="1"></el-option> -->
-            <el-option label="转账" value="2"></el-option>
+            <el-option label="转账" value="3"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="是否匹配" prop="V_IS_MATCH">
@@ -235,18 +226,6 @@
             <el-option label="否" value="N"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="图片上传" prop="V_FILE_ID">
-          <el-upload
-            class="avatar-uploader"
-            action="http://120.25.250.167/authorize/attach/fileUpload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item> 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
@@ -291,30 +270,20 @@ export default {
       dialogPayConf: false, // 新增编辑界面是否显示
       editLoading: false,
       dataFormRules: {
-        V_PAY_NAME: [
-          { required: true, message: "请输入账户名", trigger: "blur" }
+        V_BANK_NAME: [
+          { required: true, message: "请输入银行开户名", trigger: "blur" }
         ],
-        V_PAY_ACCOUNT: [
-          { required: true, message: "请输入账号", trigger: "blur" }
-        ],
-        V_PAY_NO: [
-          { required: true, message: "请输入收款名", trigger: "blur" }
-        ],
-        V_URL_SCHEME: [
-          { required: true, message: "请输入支付地址", trigger: "blur" }
+        V_BANK_ACCOUNT: [
+          { required: true, message: "请输入银行开户账号", trigger: "blur" }
         ]
       },
       // 新增编辑界面数据
       dataForm: {
         ID: "",
-        V_PAY_NAME: "",
-        V_PAY_ACCOUNT: "",
-        V_PAY_NO: "",
-        V_APP_ID: "",
+        V_BANK_NAME: "",
+        V_BANK_ACCOUNT: "",
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
-        V_FILE_ID: "",
-        V_URL_SCHEME: "",
         V_PAY_MODEL:"2"
       },
       // 新增编辑界面数据
@@ -351,9 +320,9 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://120.25.250.167/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("http://47.106.34.125/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://120.25.250.167/showPayPc2.jsp?id=" + data.ID);
+        window.open("http://47.106.34.125/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
@@ -382,14 +351,10 @@ export default {
       this.imageUrl = "";
       this.dataForm = {
         ID: "",
-        V_PAY_NAME: "",
-        V_PAY_ACCOUNT: "",
-        V_PAY_NO: "",
-        V_APP_ID: "",
-        V_PAY_TYPE: "01",
+        V_BANK_NAME: "",
+        V_BANK_ACCOUNT: "",
+        V_PAY_TYPE: "03",
         V_IS_MATCH: "Y",
-        V_FILE_ID: "",
-        V_URL_SCHEME: "",
         V_PAY_MODEL:"2"
       };
     },
@@ -405,7 +370,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://120.25.250.167/authorize/attach/getFile?ID=" + id;
+      return "http://47.106.34.125/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
@@ -447,10 +412,6 @@ export default {
             this.$api.account
               .save(params)
               .then(res => {
-                this.imageUrl = "";
-                this.dataForm.V_FILE_ID = "";
-                this.dataForm.V_URL_SCHEME = "";
-                this.dataForm.V_APP_ID = "";
                 this.editLoading = false;
                 if (res.success) {
                   this.$message({ message: "操作成功", type: "success" });
@@ -493,8 +454,13 @@ export default {
           minWidth: 120
         },
         {
-          prop: "V_PAY_NAME",
-          label: "账户名",
+          prop: "V_BANK_NAME",
+          label: "银行开户名",
+          minWidth: 120
+        },
+        {
+          prop: "V_BANK_ACCOUNT",
+          label: "银行账号",
           minWidth: 120
         },
         {
