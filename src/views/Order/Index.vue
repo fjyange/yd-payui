@@ -271,9 +271,7 @@ export default {
   methods: {
     errorOrder: function(params) {
       this.dialogError = true;
-      debugger;
       this.errorOrderForm = Object.assign({}, params);
-      alert(this.errorOrderForm);
     },
     errorSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {

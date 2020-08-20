@@ -72,6 +72,12 @@
           <span v-else-if="scope.row.V_PAY_TYPE == '02'">微信</span>
         </template>
       </el-table-column>
+      <el-table-column prop="V_TYPE" label="码类型" width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.V_TYPE == '1'">转账</span>
+          <span v-else-if="scope.row.V_TYPE == '2'">聚合</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="V_FILEID" label="图片" width="120">
         <template slot-scope="scope">
           <el-popover placement="left" title trigger="hover" width="300">
@@ -229,24 +235,19 @@
             <el-option label="转账" value="2"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="码类型" prop="V_TYPE">
+          <el-select v-model="dataForm.V_TYPE" placeholder="请选择" style="width: 100%;">
+            <!-- <el-option label="图片扫码" value="0"></el-option> -->
+            <el-option label="转账" value="1"></el-option>
+            <el-option label="聚合" value="2"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="是否匹配" prop="V_IS_MATCH">
           <el-select v-model="dataForm.V_IS_MATCH" placeholder="请选择" style="width: 100%;">
             <el-option label="是" value="Y"></el-option>
             <el-option label="否" value="N"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="图片上传" prop="V_FILE_ID">
-          <el-upload
-            class="avatar-uploader"
-            action="http://120.25.250.167/authorize/attach/fileUpload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </el-form-item> 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :size="size" @click.native="dialogVisible = false">{{$t('action.cancel')}}</el-button>
@@ -315,7 +316,8 @@ export default {
         V_IS_MATCH: "",
         V_FILE_ID: "",
         V_URL_SCHEME: "",
-        V_PAY_MODEL:"2"
+        V_PAY_MODEL:"2",
+        V_TYPE:"1"
       },
       // 新增编辑界面数据
       payConfForm: {
@@ -390,7 +392,8 @@ export default {
         V_IS_MATCH: "Y",
         V_FILE_ID: "",
         V_URL_SCHEME: "",
-        V_PAY_MODEL:"2"
+        V_PAY_MODEL:"2",
+        V_TYPE:"1"
       };
     },
     handlePayConf: function(params) {

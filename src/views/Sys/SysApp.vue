@@ -350,6 +350,7 @@ export default {
         // {prop:"USER_ID", label:"ID", minWidth:50},
         { prop: "V_APPID", label: "平台接入id", minWidth: 120 },
         { prop: "V_SECRET", label: "平台接入秘钥", minWidth: 180 },
+        {prop:"RSA_KEY", label:"RSA秘钥", minWidth:180},
         { prop: "V_APP_NAME", label: "平台名称", minWidth: 120 },
         { prop:"V_SUCCESS_RATE", label:"成功率", minWidth:120},
         { prop: "V_WX_COLLECTION", label: "微信收款", minWidth: 120 },
