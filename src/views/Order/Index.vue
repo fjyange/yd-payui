@@ -107,6 +107,7 @@
       <el-table-column header-align="center" align="center" prop="V_APP_NAME" label="所属平台"></el-table-column>
       <el-table-column header-align="center" align="center" prop="USER_NAME" label="所属用户"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_BANK_NAME" label="支付账户"></el-table-column>
+      <el-table-column header-align="center" align="center" prop="V_BANK_TYPE" label="银行名称"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_CREATE_TIME" label="订单时间"></el-table-column>
       <el-table-column header-align="center" align="center" prop="V_STATUS" label="订单状态">
         <template slot-scope="scope">
@@ -157,7 +158,7 @@
             :size="size"
             @click="errorOrder(scope.row)"
             :loading="editLoading"
-          /> -->
+          />-->
           <kt-button
             v-if="scope.row.V_STATUS =='0'"
             icon="fa fa-edit"
@@ -183,12 +184,7 @@
         style="float:right;"
       ></el-pagination>
     </div>
-    <el-dialog
-      title="错单重提"
-      width="40%"
-      :visible.sync="dialogError"
-      :close-on-click-modal="false"
-    >
+    <el-dialog title="错单重提" width="40%" :visible.sync="dialogError" :close-on-click-modal="false">
       <el-form :model="errorOrderForm" label-width="80px" :size="size" label-position="right">
         <el-form-item label="ID" prop="ID" v-if="false">
           <el-input v-model="errorOrderForm.ID" :disabled="true" auto-complete="off"></el-input>
@@ -212,7 +208,7 @@
 
 <script>
 import PopupTreeInput from "@/components/PopupTreeInput";
-import { hasPermission } from '@/permission/index.js'
+import { hasPermission } from "@/permission/index.js";
 import KtTable from "@/views/Core/KtTable";
 import KtButton from "@/views/Core/KtButton";
 import TableColumnFilterDialog from "@/views/Core/TableColumnFilterDialog";
@@ -226,8 +222,8 @@ export default {
   },
   data() {
     return {
-      showRate:false,
-      showIP:false,
+      showRate: false,
+      showIP: false,
       loading: false,
       className: "",
       size: "small",
@@ -255,23 +251,23 @@ export default {
         V_ORDER_NO: "",
         SEARCH_TIME: "",
         V_STATUS: "",
-        V_REQUEST_IP:""
+        V_REQUEST_IP: ""
       },
       columns: [],
       filterColumns: [],
       pageRequest: { page: 1, size: 10 },
       pageResult: {},
       editLoading: false,
-       // 新增编辑界面数据
+      // 新增编辑界面数据
       errorOrderForm: {
         ID: "",
         V_MONEY: ""
       },
-      dialogError : false
+      dialogError: false
     };
   },
   methods: {
-    errorOrder:function(params){
+    errorOrder: function(params) {
       this.dialogError = true;
       this.errorOrderForm = Object.assign({}, params);
     },
@@ -345,14 +341,14 @@ export default {
         this.audit(params);
       });
     },
-    openUlr:function(data) {
-        var url = "";
-        if(data.V_VIEW_TYPE == '1') {
-          url = "http://47.106.34.125:8090/" + data.V_NAME;
-        }else {
-          url = "http://47.106.34.125/showapp2.jsp?id="+data.ID;
-        }
-        window.open(url);
+    openUlr: function(data) {
+      var url = "";
+      if (data.V_VIEW_TYPE == "1") {
+        url = "http://47.106.34.125:8090/" + data.V_NAME;
+      } else {
+        url = "http://47.106.34.125/showapp2.jsp?id=" + data.ID;
+      }
+      window.open(url);
     },
     orderPass: function(data) {
       this.$confirm("是否进行确认订单么？", "提示", {}).then(() => {
@@ -432,8 +428,8 @@ export default {
   },
   mounted() {
     this.findPage(false);
-    if (hasPermission('sys:order:rateshow')){
-      this.showRate = true
+    if (hasPermission("sys:order:rateshow")) {
+      this.showRate = true;
     }
   }
 };

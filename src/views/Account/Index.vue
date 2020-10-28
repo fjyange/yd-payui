@@ -8,13 +8,13 @@
           <el-form-item>
             <el-input v-model="filters.USER_NAME" placeholder="用户名"></el-input>
           </el-form-item>
-         <!-- <el-form-item label="付款模式" prop="V_PAY_MODEL">
+          <!-- <el-form-item label="付款模式" prop="V_PAY_MODEL">
           <el-select v-model="filters.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
             <el-option label="图片扫码" value="0"></el-option>
             <el-option label="app固码" value="1"></el-option>
             <el-option label="转账" value="2"></el-option>
           </el-select>
-        </el-form-item> -->
+          </el-form-item>-->
           <el-form-item>
             <kt-button
               icon="fa fa-search"
@@ -84,7 +84,7 @@
             >
           </el-popover>
         </template>
-      </el-table-column> -->
+      </el-table-column>-->
       <el-table-column prop="V_IS_MATCH" label="是否匹配" width="120">
         <template slot-scope="scope">
           <el-switch
@@ -208,6 +208,9 @@
         <el-form-item label="银行开户账号" prop="V_BANK_ACCOUNT">
           <el-input v-model="dataForm.V_BANK_ACCOUNT" auto-complete="off"></el-input>
         </el-form-item>
+        <el-form-item label="银行名" prop="V_BANK_TYPE">
+          <el-input v-model="dataForm.V_BANK_TYPE" auto-complete="off"></el-input>
+        </el-form-item>
         <el-form-item label="支付类型" prop="V_PAY_TYPE">
           <el-select v-model="dataForm.V_PAY_TYPE" placeholder="请选择" style="width: 100%;">
             <el-option label="银行卡" value="03"></el-option>
@@ -216,7 +219,7 @@
         <el-form-item label="付款模式" prop="V_PAY_MODEL">
           <el-select v-model="dataForm.V_PAY_MODEL" placeholder="请选择" style="width: 100%;">
             <!-- <el-option label="图片扫码" value="0"></el-option>
-            <el-option label="app固码" value="1"></el-option> -->
+            <el-option label="app固码" value="1"></el-option>-->
             <el-option label="转账" value="3"></el-option>
           </el-select>
         </el-form-item>
@@ -284,7 +287,8 @@ export default {
         V_BANK_ACCOUNT: "",
         V_PAY_TYPE: "",
         V_IS_MATCH: "",
-        V_PAY_MODEL:"2"
+        V_BANK_TYPE: "",
+        V_PAY_MODEL: "2"
       },
       // 新增编辑界面数据
       payConfForm: {
@@ -318,13 +322,13 @@ export default {
         })
         .then(res => {});
     },
-    testUrl:function(data) {
-      if(data.V_PAY_MODEL == '1') {
+    testUrl: function(data) {
+      if (data.V_PAY_MODEL == "1") {
         window.open("http://47.106.34.125/showAccount.jsp?id=" + data.V_APP_ID);
-      } else if(data.V_PAY_MODEL == '2') {
+      } else if (data.V_PAY_MODEL == "2") {
         window.open("http://47.106.34.125/showPayPc2.jsp?id=" + data.ID);
       } else {
-        alert("图片转账无法测试")
+        alert("图片转账无法测试");
       }
     },
     // 批量删除
@@ -353,9 +357,10 @@ export default {
         ID: "",
         V_BANK_NAME: "",
         V_BANK_ACCOUNT: "",
+        V_BANK_TYPE: "",
         V_PAY_TYPE: "03",
         V_IS_MATCH: "Y",
-        V_PAY_MODEL:"2"
+        V_PAY_MODEL: "2"
       };
     },
     handlePayConf: function(params) {
@@ -461,6 +466,11 @@ export default {
         {
           prop: "V_BANK_ACCOUNT",
           label: "银行账号",
+          minWidth: 120
+        },
+        {
+          prop: "V_BANK_TYPE",
+          label: "银行名",
           minWidth: 120
         },
         {
