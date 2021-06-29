@@ -353,9 +353,9 @@ export default {
     },
     testUrl:function(data) {
       if(data.V_PAY_MODEL == '1') {
-        window.open("http://120.25.250.167/showAccount.jsp?id=" + data.V_APP_ID);
+        window.open("http://47.119.195.5/showAccount.jsp?id=" + data.V_APP_ID);
       } else if(data.V_PAY_MODEL == '2') {
-        window.open("http://120.25.250.167/showPayPc2.jsp?id=" + data.ID);
+        window.open("http://47.119.195.5/showPayPc2.jsp?id=" + data.ID);
       } else {
         alert("图片转账无法测试")
       }
@@ -408,7 +408,7 @@ export default {
       this.imageUrl = this.getFileUrl(params.V_FILEID);
     },
     getFileUrl: function(id) {
-      return "http://120.25.250.167/authorize/attach/getFile?ID=" + id;
+      return "http://47.119.195.5/authorize/attach/getFile?ID=" + id;
     },
     payConfSubmit: function() {
       this.$confirm("确认提交吗？", "提示", {}).then(() => {
